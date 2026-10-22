@@ -100,6 +100,7 @@
     color: var(--navy); transition: all .15s; touch-action: manipulation; user-select: none;
   }
   .vbtn:active { transform: scale(.97); }
+  .vbtn:disabled { opacity: .55; cursor: not-allowed; }
   .vbtn.up.on { background: #c6f6d5; border-color: #68d391; color: #276749; font-weight: 700; }
   .vbtn.down.on { background: #fed7d7; border-color: #fc8181; color: #c53030; font-weight: 700; }
   .vote-status { font-size: 13px; color: var(--gray); }
@@ -167,6 +168,12 @@
     background: #0f2744; color: #fff; padding: 12px 20px; border-radius: 999px;
     font-size: 14px; z-index: 9999; box-shadow: 0 4px 16px rgba(0,0,0,.25); max-width: 90%;
   }
+  .conn-bar {
+    font-size: 12px; color: #744210; background: #fffbeb; border: 1px solid #f6e05e;
+    border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; display: none;
+  }
+  .conn-bar.show { display: block; }
+  .conn-bar.err { background: #fff5f5; border-color: #feb2b2; color: #9b2c2c; }
 </style>
 </head>
 <body>
@@ -174,13 +181,11 @@
   <div class="brand">輝立証劵新股部</div>
   <div class="meta">過聆訊後新股推薦 · 2026年10月22日</div>
 </div>
-
 <div class="wrap">
   <div class="hero" id="overview">
     <h1>過聆訊後新股推薦</h1>
     <div class="sub">精選三家 · 點擊卡片展開詳情 ｜ 數據來源：港交所聆訊後資料集</div>
     <div class="hero-cards">
-
       <button type="button" class="hero-card" data-open="tc" id="hero-tc">
         <div class="stars">★★★★★</div>
         <div class="name">① 天賜材料</div>
@@ -207,12 +212,10 @@
       </button>
     </div>
   </div>
-
+  <div id="connBar" class="conn-bar">正在連接投票伺服器…</div>
   <div class="vote-how">
     <b>投票互動：</b>撳 <b>📈 升</b>／<b>📉 跌</b>，全組可見實時票數。再撳可取消。
   </div>
-
-
   <div class="ipo-panel" id="panel-tc">
     <button type="button" class="ipo-panel-head" data-open="tc">
       <div class="title-wrap">
@@ -330,45 +333,67 @@
 <table class="peer-table"><tr><th>指標</th><th>宏芯宇電子（IPO 標的）</th><th>江波龍 301308.SZ</th></tr><tr><td>主業</td><td>存儲模組／顆粒（Fabless）</td><td>存儲模組（品牌+封測能力）</td></tr><tr><td>全球位置</td><td>約第 12（2025 收入）</td><td>國內模組龍頭之一</td></tr><tr><td>盈利拐點</td><td>2023 虧→2024/25 盈</td><td>隨存儲週期波動</td></tr><tr><td>啟示</td><td colspan="2">兩者均受 NAND/DRAM 價格與 AI 存力拉動；宏芯宇扭虧與毛利率改善斜率陡，江波龍可作 A 股流動性與週期錨。</td></tr></table></div>
     </div>
   </div>
-
   <div class="section" id="others">
     <h2>其他過聆訊公司（簡表）</h2>
-    <div class="other-item"><div class="num">1</div><div class="body"><div class="cname">江蘇芯德半導體（21/10/2026）</div><div class="cinfo">H · 半導體封測 OSAT（中國先進封裝約第7，份額0.6%）· <b>預計集資約 5.85 億港元</b> · 收入增長但仍虧損 ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108516/documents/sehk26102101183_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>    <div class="other-item"><div class="num">2</div><div class="body"><div class="cname">創智芯聯（19/10/2026）</div><div class="cinfo">H · 半導體／PCB 鍍層材料與服務 · <b>預計集資約 15 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108473/documents/sehk26101900081_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>    <div class="other-item"><div class="num">3</div><div class="body"><div class="cname">遠信儲能（19/10/2026）</div><div class="cinfo">H · 集成儲能系統解決方案 · <b>預計集資約 8 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108790/documents/sehk26101900243_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>    <div class="other-item"><div class="num">4</div><div class="body"><div class="cname">一微科技（30/09/2026）</div><div class="cinfo">H · 18C · 智能移動機器人解決方案 · <b>預計集資約 7.8 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108911/documents/sehk26093003029_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>    <div class="other-item"><div class="num">5</div><div class="body"><div class="cname">希磁科技（28/09/2026）</div><div class="cinfo">H · 磁性傳感器 IDM · <b>預計集資約 15 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108258/documents/sehk26092802069_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>    <div class="other-item"><div class="num">6</div><div class="body"><div class="cname">湖南軍信環保（13/09/2026）</div><div class="cinfo">A+H（301109.SZ）· 環保公用／垃圾焚燒 · <b>預計集資約 20 億</b></div></div></div>    <div class="other-item"><div class="num">7</div><div class="body"><div class="cname">濤濤車業（07/09/2026）</div><div class="cinfo">A+H（301345.SZ）· 電動低速車／出口 · <b>預計集資約 19.5 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108575/documents/sehk26090701489_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>    <div class="other-item"><div class="num">8</div><div class="body"><div class="cname">深圳四方精創（06/09/2026）</div><div class="cinfo">H · 金融科技／IT · 集資額見披露易</div></div></div>    <div class="other-item"><div class="num">9</div><div class="body"><div class="cname">哥瑞利軟件（23/06/2026 聆訊後）</div><div class="cinfo">H · 18C · 半導體 IMSS · <b>預計集資約 10 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108262/documents/sehk26062301713_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>    <div class="other-item"><div class="num">10</div><div class="body"><div class="cname">永康控股（26/06/2026）</div><div class="cinfo">H · 集裝箱堆場／物流 · <b>預計集資約 7.8 億</b>（曾有撤回相關公告，以披露易為準）</div></div></div>    <div class="other-item"><div class="num">11</div><div class="body"><div class="cname">坦博爾（21/06/2026）</div><div class="cinfo">H · 戶外服飾 · <b>預計集資約 20 億</b></div></div></div>
+    <div class="other-item"><div class="num">1</div><div class="body"><div class="cname">江蘇芯德半導體（21/10/2026）</div><div class="cinfo">H · 半導體封測 OSAT（中國先進封裝約第7，份額0.6%）· <b>預計集資約 5.85 億港元</b> · 收入增長但仍虧損 ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108516/documents/sehk26102101183_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>
+    <div class="other-item"><div class="num">2</div><div class="body"><div class="cname">創智芯聯（19/10/2026）</div><div class="cinfo">H · 半導體／PCB 鍍層材料與服務 · <b>預計集資約 15 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108473/documents/sehk26101900081_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>
+    <div class="other-item"><div class="num">3</div><div class="body"><div class="cname">遠信儲能（19/10/2026）</div><div class="cinfo">H · 集成儲能系統解決方案 · <b>預計集資約 8 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108790/documents/sehk26101900243_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>
+    <div class="other-item"><div class="num">4</div><div class="body"><div class="cname">一微科技（30/09/2026）</div><div class="cinfo">H · 18C · 智能移動機器人解決方案 · <b>預計集資約 7.8 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108911/documents/sehk26093003029_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>
+    <div class="other-item"><div class="num">5</div><div class="body"><div class="cname">希磁科技（28/09/2026）</div><div class="cinfo">H · 磁性傳感器 IDM · <b>預計集資約 15 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108258/documents/sehk26092802069_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>
+    <div class="other-item"><div class="num">6</div><div class="body"><div class="cname">湖南軍信環保（13/09/2026）</div><div class="cinfo">A+H（301109.SZ）· 環保公用／垃圾焚燒 · <b>預計集資約 20 億</b></div></div></div>
+    <div class="other-item"><div class="num">7</div><div class="body"><div class="cname">濤濤車業（07/09/2026）</div><div class="cinfo">A+H（301345.SZ）· 電動低速車／出口 · <b>預計集資約 19.5 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108575/documents/sehk26090701489_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>
+    <div class="other-item"><div class="num">8</div><div class="body"><div class="cname">深圳四方精創（06/09/2026）</div><div class="cinfo">H · 金融科技／IT · 集資額見披露易</div></div></div>
+    <div class="other-item"><div class="num">9</div><div class="body"><div class="cname">哥瑞利軟件（23/06/2026 聆訊後）</div><div class="cinfo">H · 18C · 半導體 IMSS · <b>預計集資約 10 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108262/documents/sehk26062301713_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>
+    <div class="other-item"><div class="num">10</div><div class="body"><div class="cname">永康控股（26/06/2026）</div><div class="cinfo">H · 集裝箱堆場／物流 · <b>預計集資約 7.8 億</b>（曾有撤回相關公告，以披露易為準）</div></div></div>
+    <div class="other-item"><div class="num">11</div><div class="body"><div class="cname">坦博爾（21/06/2026）</div><div class="cinfo">H · 戶外服飾 · <b>預計集資約 20 億</b></div></div></div>
   </div>
-
   <div class="section">
     <h2>打新建議（精簡）</h2>
     <ul class="clean">
-      <li><b>★★★★★</b> 天賜材料、和美藥業-B：前者基本面與業績兌現最強；後者核心產品已獲銀屑病 NDA，18A 管線清晰。</li><li><b>★★★★☆</b> 宏芯宇電子：新一批中集資最大、全球存儲第12、由虧轉盈且毛利率大幅改善，適合作為成長配置。</li>
+      <li><b>★★★★★</b> 天賜材料、和美藥業-B：前者基本面與業績兌現最強；後者核心產品已獲銀屑病 NDA，18A 管線清晰。</li>
+      <li><b>★★★★☆</b> 宏芯宇電子：新一批中集資最大、全球存儲第12、由虧轉盈且毛利率大幅改善，適合作為成長配置。</li>
     </ul>
     <p style="margin-top:12px;font-size:12.5px;color:var(--gray);text-align:left;">注：僅供參考，不構成投資建議。港股打新存在破發風險。</p>
   </div>
-
   <div class="footer">
     輝立証劵新股部 ｜ 數據來源：港交所聆訊後資料集 ｜ 2026年10月22日<br>
     <a href="https://elizabeth20041021-droid.github.io/phillip-ipo/" style="color:#718096;">GitHub Pages 永久免費版</a>
   </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function () {
-  // ===== 你的 Supabase 設定（已填入）=====
-  var SUPABASE_URL = "https://dqvqtmdnuzryowktbtgt.supabase.co/rest/v1/";
-  // 若投票失敗，請到 Supabase → Project Settings → API → 複製完整 anon public key 替換下一行
+  // ===== Supabase 設定 =====
+  // Project URL 必須是這種格式，不要加 /rest/v1/
+  var SUPABASE_URL = "https://dqvqtmdnuzryowktbtgt.supabase.co";
+  // 請到 Supabase → Project Settings → API → 複製完整 anon public key 貼在下一行
   var SUPABASE_KEY = "sb_publishable_a8ug__BxIM25rkb7v5r0vg_PtCxkv52";
 
-  // 頁面內部 id → 你資料庫表裡的 id（你 SQL 已用 tianci/hemei/hongxinyu）
   var KEYS = ["tinci", "hemay", "hosin"];
   var DB_ID = { tinci: "tianci", hemay: "hemei", hosin: "hongxinyu" };
   var NAMES = { tinci: "天賜材料", hemay: "和美藥業-B", hosin: "宏芯宇電子" };
   var MY_STORE = "ipo_my_vote_supabase_v1";
 
+  var bar = document.getElementById("connBar");
+  function setBar(msg, isErr) {
+    if (!bar) return;
+    bar.textContent = msg;
+    bar.classList.add("show");
+    if (isErr) bar.classList.add("err"); else bar.classList.remove("err");
+  }
+
+  if (!SUPABASE_KEY || SUPABASE_KEY.indexOf("PASTE_") === 0 || SUPABASE_KEY.length < 40) {
+    setBar("請先把完整 anon public key 貼進 index.html 的 SUPABASE_KEY", true);
+  }
+
   var sb = null;
   try {
-    sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    if (window.supabase && SUPABASE_KEY && SUPABASE_KEY.indexOf("PASTE_") !== 0) {
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
   } catch (e) {
     console.error(e);
+    setBar("Supabase 初始化失敗：" + (e && e.message ? e.message : e), true);
   }
 
   var counts = { tinci: { up: 0, down: 0 }, hemay: { up: 0, down: 0 }, hosin: { up: 0, down: 0 } };
@@ -387,7 +412,7 @@
     t.className = "toast";
     t.textContent = msg;
     document.body.appendChild(t);
-    setTimeout(function () { t.remove(); }, 1600);
+    setTimeout(function () { t.remove(); }, 1800);
   }
 
   function paint() {
@@ -397,7 +422,6 @@
       var up = c.up || 0, down = c.down || 0, total = up + down;
       var upPct = total ? Math.round((up / total) * 100) : 0;
       var downPct = total ? 100 - upPct : 0;
-
       var hero = document.querySelector('[data-sum="' + k + '"]');
       if (hero) {
         hero.innerHTML =
@@ -431,7 +455,7 @@
       var res = await sb.from("ipo_votes").select("id,up_votes,down_votes");
       if (res.error) {
         console.error(res.error);
-        toast("票數讀取失敗，請檢查 anon key");
+        setBar("讀取失敗：" + (res.error.message || JSON.stringify(res.error)), true);
         return;
       }
       (res.data || []).forEach(function (row) {
@@ -441,35 +465,31 @@
           }
         });
       });
+      if (bar) { bar.classList.remove("show"); bar.classList.remove("err"); }
       paint();
     } catch (e) {
       console.error(e);
+      setBar("網路錯誤：" + (e && e.message ? e.message : e), true);
     }
   }
 
   async function cast(company, side) {
     if (!sb) {
-      toast("Supabase 未連線");
+      toast("請先設定完整 SUPABASE_KEY");
       return;
     }
     if (busy) return;
     busy = true;
     document.querySelectorAll(".vbtn").forEach(function (b) { b.disabled = true; });
-
     var my = loadMy();
     var prev = my[company];
     var dbId = DB_ID[company];
-    var col = side === "up" ? "up_votes" : "down_votes";
-
     try {
-      // 讀最新
       var cur = await sb.from("ipo_votes").select("up_votes,down_votes").eq("id", dbId).single();
       if (cur.error) throw cur.error;
       var up = (cur.data && cur.data.up_votes) || 0;
       var down = (cur.data && cur.data.down_votes) || 0;
-
       if (prev === side) {
-        // 取消
         if (side === "up") up = Math.max(0, up - 1);
         else down = Math.max(0, down - 1);
         delete my[company];
@@ -477,23 +497,21 @@
       } else {
         if (prev === "up") up = Math.max(0, up - 1);
         if (prev === "down") down = Math.max(0, down - 1);
-        if (side === "up") up += 1;
-        else down += 1;
+        if (side === "up") up += 1; else down += 1;
         my[company] = side;
         toast((side === "up" ? "📈 升" : "📉 跌") + " · " + (NAMES[company] || ""));
       }
-
       var upd = await sb.from("ipo_votes").update({ up_votes: up, down_votes: down }).eq("id", dbId);
       if (upd.error) throw upd.error;
-
       counts[company] = { up: up, down: down };
       saveMy(my);
       paint();
     } catch (e) {
       console.error(e);
-      toast("同步失敗：請確認 anon key 完整、資料表權限已開");
+      var msg = (e && e.message) ? e.message : String(e);
+      toast("同步失敗：" + msg);
+      setBar("寫入失敗：" + msg, true);
     }
-
     busy = false;
     document.querySelectorAll(".vbtn").forEach(function (b) { b.disabled = false; });
   }
@@ -535,8 +553,9 @@
     });
   });
 
+  paint();
   fetchVotes();
-  setInterval(fetchVotes, 12000);
+  setInterval(fetchVotes, 10000);
 })();
 </script>
 </body>
