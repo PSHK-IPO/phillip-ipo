@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>過聆訊後新股推薦｜先通國際醫藥-B 聚焦</title>
+<title>過聆訊後新股推薦｜三家聚焦</title>
 <style>
   :root {
     --navy: #0f2744; --gold: #d69e2e; --green: #276749; --blue: #2b6cb0;
@@ -147,10 +147,30 @@
     font-size: 18px; color: var(--navy); border-left: 4px solid var(--gold);
     padding-left: 12px; margin-bottom: 8px;
   }
+
   .other-item {
-    display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border);
-    font-size: 13.5px; text-align: left;
+    display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border);
+    font-size: 13.5px; text-align: left; align-items: flex-start; flex-wrap: wrap;
   }
+  .other-item .body { flex: 1; min-width: 180px; }
+  .other-vote {
+    display: flex; flex-direction: column; gap: 6px; align-items: flex-end;
+    flex-shrink: 0; margin-left: auto;
+  }
+  .other-vote .ov-btns { display: flex; gap: 6px; }
+  .ovbtn {
+    border: 1px solid #e2e8f0; background: #fff; border-radius: 999px;
+    padding: 6px 10px; font-size: 12px; font-family: inherit; cursor: pointer;
+    color: var(--navy); touch-action: manipulation; user-select: none; min-height: 36px;
+  }
+  .ovbtn:active { transform: scale(.97); }
+  .ovbtn.up.on { background: #c6f6d5; border-color: #68d391; color: #276749; font-weight: 700; }
+  .ovbtn.down.on { background: #fed7d7; border-color: #fc8181; color: #c53030; font-weight: 700; }
+  .other-vote .ov-sum {
+    font-size: 12px; font-variant-numeric: tabular-nums; color: var(--gray);
+  }
+  .other-vote .ov-sum b.u { color: #276749; }
+  .other-vote .ov-sum b.d { color: #c53030; }
   .other-item:last-child { border-bottom: none; }
   .other-item .num {
     width: 28px; height: 28px; border-radius: 50%; background: #edf2f7; color: var(--navy);
@@ -178,7 +198,7 @@
 </head>
 <body>
 <div class="topbar">
-  <div class="brand">輝立證券新股部</div>
+  <div class="brand">輝立証劵新股部</div>
   <div class="meta">過聆訊後新股推薦 · 2026年11月10日</div>
 </div>
 <div class="wrap">
@@ -186,129 +206,41 @@
     <h1>過聆訊後新股推薦</h1>
     <div class="sub">精選三家 · 點擊卡片展開詳情 ｜ 數據來源：港交所聆訊後資料集</div>
     <div class="hero-cards">
-      <button type="button" class="hero-card" data-open="xt" id="hero-xt">
-        <div class="stars">★★★★★</div>
-        <div class="name">① 先通國際醫藥-B</div>
-        <div class="tag">H · 18A · 放射性藥物（核藥）</div>
-        <div class="fund">預計集資 <b>約10億</b></div>
-        <div class="vote-sum" data-sum="xiantong"><span class="vote-pill up">🐮 0</span><span class="vote-pill down">🐻 0</span></div>
-        <div class="hint">▼ 點擊展開全部詳情</div>
-      </button>
       <button type="button" class="hero-card" data-open="tc" id="hero-tc">
         <div class="stars">★★★★★</div>
-        <div class="name">② 天賜材料</div>
+        <div class="name">① 天賜材料</div>
         <div class="tag">A+H · 電解液龍頭</div>
         <div class="fund">預計集資 <b>約55億</b></div>
         <div class="vote-sum" data-sum="tinci"><span class="vote-pill up">🐮 0</span><span class="vote-pill down">🐻 0</span></div>
         <div class="hint">▼ 點擊展開全部詳情</div>
       </button>
-      <button type="button" class="hero-card" data-open="hx" id="hero-hx">
+      <button type="button" class="hero-card" data-open="xt" id="hero-xt">
+        <div class="stars">★★★★★</div>
+        <div class="name">② 先通國際醫藥-B</div>
+        <div class="tag">H · 18A · 放射性核藥</div>
+        <div class="fund">預計集資 <b>約10億</b></div>
+        <div class="vote-sum" data-sum="sinotau"><span class="vote-pill up">🐮 0</span><span class="vote-pill down">🐻 0</span></div>
+        <div class="hint">▼ 點擊展開全部詳情</div>
+      </button>
+      <button type="button" class="hero-card" data-open="tt" id="hero-tt">
         <div class="stars">★★★★☆</div>
-        <div class="name">③ 宏芯宇電子</div>
-        <div class="tag">H · 存儲模組 / NAND·DRAM</div>
-        <div class="fund">預計集資 <b>約26.8億</b></div>
-        <div class="vote-sum" data-sum="hosin"><span class="vote-pill up">🐮 0</span><span class="vote-pill down">🐻 0</span></div>
+        <div class="name">③ 濤濤車業</div>
+        <div class="tag">A+H · 電動低速車全球第一</div>
+        <div class="fund">預計集資 <b>約19.5億</b></div>
+        <div class="vote-sum" data-sum="taotao"><span class="vote-pill up">🐮 0</span><span class="vote-pill down">🐻 0</span></div>
         <div class="hint">▼ 點擊展開全部詳情</div>
       </button>
     </div>
   </div>
   <div id="connBar" class="conn-bar">正在連接投票伺服器…</div>
   <div class="vote-how">
-    <b>投票互動：</b>撳 <b>📈 升</b>／<b>📉 跌</b>，全組可見實時票數。再撳可取消。
+    <b>投票互動：</b>前三詳情與下方簡表均可撳 <b>📈 升</b>／<b>📉 跌</b>；票數全組可見。再撳可取消。
   </div>
-
-  <!-- ① 先通國際醫藥-B -->
-  <div class="ipo-panel" id="panel-xt">
-    <button type="button" class="ipo-panel-head" data-open="xt">
-      <div class="title-wrap">
-        <h2>① 先通國際醫藥-B <span class="badge green">★★★★★</span> <span class="badge">H · 18A</span></h2>
-        <p class="one-liner">中國首家獲創新放射性藥物批准 · 全產業鏈核藥 · XTR008 預計 2026.12 獲批</p>
-      </div>
-      <span class="chev">▼</span>
-    </button>
-    <div class="ipo-panel-body section-inner">
-      <div class="vote-widget" data-company="xiantong">
-        <div class="vote-actions">
-          <button type="button" class="vbtn up" data-side="up">📈 升</button>
-          <button type="button" class="vbtn down" data-side="down">📉 跌</button>
-          <span class="vote-status" data-status></span>
-        </div>
-        <div class="meter">
-          <div class="meter-labels">
-            <span class="u" data-lab-up>📈 升 0% (0)</span>
-            <span class="d" data-lab-down>📉 跌 0% (0)</span>
-          </div>
-          <div class="meter-track"><div class="meter-up" data-meter style="width:50%"></div></div>
-        </div>
-      </div>
-      <div class="kpi-row">
-        <div class="kpi"><div class="label">2025 收入</div><div class="val">約 0.99 億</div></div>
-        <div class="kpi"><div class="label">2026H1 收入</div><div class="val up">0.61 億 (+66%)</div></div>
-        <div class="kpi"><div class="label">2025 淨虧損</div><div class="val">約 6.18 億</div></div>
-        <div class="kpi"><div class="label">預計集資</div><div class="val">約 10 億</div></div>
-      </div>
-      <h3>公司定位與行業地位</h3>
-      <ul class="clean">
-        <li><b>中國首家獲得創新放射性藥物上市批准</b>的企業，亦是中國首批實現全產業鏈整合的核藥公司之一（核素開發 → 研發 → 製造 → 商業化）</li>
-        <li>業務聚焦腫瘤學、神經退行性疾病、心血管疾病三大領域</li>
-        <li>已建立 3 個生產基地（無錫、中山、綿陽），總建築面積超 4 萬㎡，21 條商業規模生產線</li>
-        <li>管線共 13 項資產（5 項自主發現），核心產品 XTR008（Lutathera 仿製藥）已提交 NDA，預計 2026 年 12 月獲批</li>
-      </ul>
-      <h3>核心優勢</h3>
-      <ul class="clean">
-        <li><b>全產業鏈壁壘高</b>：核素供應、熱室 GMP、配送時效要求極高，行業集中度 CR3 約 54%</li>
-        <li><b>商業化產品已落地</b>：歐韋寧®（XTR005，中國首個 AD 生物標誌物 PET 示蹤劑）、歐達樂®、18F-FDG</li>
-        <li><b>XTR008 差異化</b>：同類首個以化學藥品 3 類提交 NDA；同時推進 G3 GEP-NET 等新適應症（Lutathera 尚未覆蓋）</li>
-        <li>股東陣容含國資（國調基金、同輻基金）、茅台系、中金、中國人壽等</li>
-      </ul>
-      <h3>主要風險</h3>
-      <ul class="clean">
-        <li class="risk">仍處於商業化初期，收入規模小、持續大幅虧損（2025 淨虧約 6.18 億）</li>
-        <li class="risk">核素供應與產能利用率仍受限，商業化兌現速度存不確定性</li>
-        <li class="risk">18A 生物科技公司，管線失敗或審批延遲風險較高</li>
-        <li class="risk">無控股股東，股權相對分散</li>
-      </ul>
-      <div class="peer-box blue">
-        <h4>同行比較（中國核藥主要玩家）</h4>
-        <p>國內核藥市場以「三巨頭 + 創新梯隊」格局為主，先通屬創新驅動的第二梯隊。</p>
-        <table class="peer-table">
-          <tr>
-            <th>公司</th>
-            <th>定位</th>
-            <th>優勢 / 啟示</th>
-          </tr>
-          <tr>
-            <td><b>中國同輻</b><br>(01763.HK)</td>
-            <td>全產業鏈龍頭<br>市佔約 30%+</td>
-            <td>中核背景、核藥房網絡、核素供應優勢明顯；先通可對標其「規模與渠道」差距</td>
-          </tr>
-          <tr>
-            <td><b>東誠藥業</b><br>(002675.SZ)</td>
-            <td>核藥房 + 診療一體化</td>
-            <td>核藥房覆蓋廣、已有「篩查-診斷-治療」產品；先通在創新管線速度上具差異化</td>
-          </tr>
-          <tr>
-            <td><b>遠大醫藥</b><br>(00512.HK)</td>
-            <td>釔-90 微球等治療核藥</td>
-            <td>治療性核藥商業化領先；先通 XTR008 若順利獲批，有望切入同類治療市場</td>
-          </tr>
-          <tr>
-            <td><b>先通國際醫藥-B</b></td>
-            <td>創新核藥 + 全鏈能力</td>
-            <td>中國首個創新核藥獲批企業；管線豐富且臨近商業化，但規模與盈利仍遠落後三巨頭</td>
-          </tr>
-        </table>
-      </div>
-      <p class="meta-line mt-16">聯席保薦人：廣發證券、中金公司、中信證券　｜　<a href="https://www1.hkexnews.hk/app/sehk/2026/109006/documents/sehk26102801583_c.pdf" target="_blank">聆訊後資料集</a></p>
-    </div>
-  </div>
-
-  <!-- ② 天賜材料 -->
   <div class="ipo-panel" id="panel-tc">
     <button type="button" class="ipo-panel-head" data-open="tc">
       <div class="title-wrap">
-        <h2>② 天賜材料 <span class="badge green">★★★★★</span> <span class="badge">A+H · 002709.SZ</span></h2>
-        <p class="one-liner">全球電解液連續約 10 年出貨量第一 · 2026H1 淨利 +968% · 基本面仍最強</p>
+        <h2>① 天賜材料 <span class="badge green">★★★★★</span> <span class="badge">A+H · 002709.SZ</span></h2>
+        <p class="one-liner">全球電解液第一 · 2026H1 淨利 +968% · 基本面仍最強</p>
       </div>
       <span class="chev">▼</span>
     </button>
@@ -327,44 +259,33 @@
           <div class="meter-track"><div class="meter-up" data-meter style="width:50%"></div></div>
         </div>
       </div>
-      <div class="kpi-row">
-        <div class="kpi"><div class="label">2025 收入</div><div class="val">約 167 億</div></div>
-        <div class="kpi"><div class="label">2026H1 收入</div><div class="val up">147 億 (+109%)</div></div>
-        <div class="kpi"><div class="label">2026H1 淨利</div><div class="val up">28.6 億 (+968%)</div></div>
-        <div class="kpi"><div class="label">預計集資</div><div class="val">約 55 億</div></div>
-      </div>
+      <div class="kpi-row"><div class="kpi"><div class="label">2025 收入</div><div class="val">約 167 億</div></div><div class="kpi"><div class="label">2026H1 收入</div><div class="val up">147 億 (+109%)</div></div><div class="kpi"><div class="label">2026H1 淨利</div><div class="val up">28.6 億 (+968%)</div></div><div class="kpi"><div class="label">預計集資</div><div class="val">約 55 億</div></div></div>
       <h3>市場地位</h3>
-      <ul class="clean">
-        <li><b>全球電解液連續約 10 年出貨量第一</b>，2025 份額約 36%</li>
-        <li>全球最大六氟磷酸鋰及 LiFSI 供應商之一</li>
-        <li>垂直一體化（溶質 + 添加劑 + 電解液）成本優勢明顯</li>
-      </ul>
+      <ul class="clean"><li><b>全球電解液連續約 10 年出貨量第一</b>，2025 份額約 <b>36%</b></li><li>全球最大六氟磷酸鋰及 LiFSI（鋰鹽添加劑）供應商之一</li><li>垂直一體化（溶質 + 添加劑 + 電解液）成本優勢明顯</li></ul>
       <h3>核心優勢</h3>
-      <ul class="clean">
-        <li><b>2026 業績 V 型反轉最強</b>：H1 淨利同比近 10 倍</li>
-        <li>全球化布局：募資約 80% 投海外（摩洛哥、美國等）</li>
-        <li>固態電解質等新技術儲備</li>
-        <li>A+H 後流動性與國際投資者覆蓋提升</li>
-      </ul>
+      <ul class="clean"><li><b>2026 業績 V 型反轉最強</b>：H1 淨利同比近 10 倍</li><li>全球化布局：募資約 80% 投海外（摩洛哥、美國等）</li><li>固態電解質等新技術儲備</li><li>A+H 後流動性與國際投資者覆蓋提升</li></ul>
       <h3>主要風險</h3>
-      <ul class="clean">
-        <li class="risk">鋰電材料周期波動，價格與庫存風險仍在</li>
-        <li class="risk">海外產能爬坡與地緣政治不確定性</li>
-      </ul>
+      <ul class="clean"><li class="risk">鋰電行業<strong>強週期性</strong></li><li class="risk">A 股 2026 年迄今跌幅約 <b>32%</b></li><li class="risk">受原材料與下游庫存波動影響</li></ul>
+      <h3>保薦人 · 聆訊後資料集</h3>
+      <p class="meta-line">摩根大通、中信證券、廣發證券</p>
+      <p class="link meta-line" style="margin-top:4px;">
+        <a href="https://www1.hkexnews.hk/app/sehk/2026/108340/documents/sehk26100500007_c.pdf" target="_blank">聆訊後資料集 sehk26100500007_c.pdf</a>
+      </p>
+      <div class="peer-box blue"><h4>同行對比：新宙邦（300037.SZ）</h4><p>新宙邦為電解液行業「雙雄」之一，海外客戶綁定較深，可作份額與盈利對照。</p>
+<table class="peer-table"><tr><th>指標</th><th>天賜材料（IPO 標的）</th><th>新宙邦 300037.SZ</th></tr><tr><td>全球電解液份額（約）</td><td><b>約 32–36%（第一）</b></td><td>約 13%（第三）</td></tr><tr><td>2026H1 淨利增速</td><td><b>+968%</b></td><td>約 +100% 量級</td></tr><tr><td>模式特點</td><td>高度垂直一體化（6F / LiFSI / 添加劑）</td><td>技術與海外客戶綁定較強</td></tr><tr><td>海外布局</td><td>摩洛哥、美國（霍尼韋爾合資）等</td><td>波蘭等已投產 / 擴建</td></tr><tr><td>啟示</td><td colspan="2">天賜份額與一體化成本優勢領先；新宙邦海外與客戶結構可作互補參考。</td></tr></table></div>
     </div>
   </div>
-
-  <!-- ③ 宏芯宇電子（保留簡版） -->
-  <div class="ipo-panel" id="panel-hx">
-    <button type="button" class="ipo-panel-head" data-open="hx">
+  
+  <div class="ipo-panel" id="panel-xt">
+    <button type="button" class="ipo-panel-head" data-open="xt">
       <div class="title-wrap">
-        <h2>③ 宏芯宇電子 <span class="badge">★★★★☆</span> <span class="badge">H · 存儲</span></h2>
-        <p class="one-liner">存儲模組 / NAND·DRAM · 由虧轉盈 · 集資規模較大</p>
+        <h2>② 先通國際醫藥-B <span class="badge green">★★★★★</span> <span class="badge">H · 18A 生物科技</span></h2>
+        <p class="one-liner">放射性核藥（診斷+治療）· 18A · 管線含靶向核素療法</p>
       </div>
       <span class="chev">▼</span>
     </button>
     <div class="ipo-panel-body section-inner">
-      <div class="vote-widget" data-company="hosin">
+      <div class="vote-widget" data-company="sinotau">
         <div class="vote-actions">
           <button type="button" class="vbtn up" data-side="up">📈 升</button>
           <button type="button" class="vbtn down" data-side="down">📉 跌</button>
@@ -378,54 +299,226 @@
           <div class="meter-track"><div class="meter-up" data-meter style="width:50%"></div></div>
         </div>
       </div>
-      <p class="meta-line">預計集資約 26.8 億 · 詳情請參考最新聆訊後資料集</p>
+      <div class="kpi-row">
+        <div class="kpi"><div class="label">路徑</div><div class="val">18A 生物科技</div></div>
+        <div class="kpi"><div class="label">往績</div><div class="val">持續虧損</div></div>
+        <div class="kpi"><div class="label">主業</div><div class="val">放射性核藥</div></div>
+        <div class="kpi"><div class="label">預計集資</div><div class="val">約 10 億</div></div>
+      </div>
+      <h3>市場地位</h3>
+      <ul class="clean">
+        <li>按《上市規則》<b>第 18A 章</b>申請主板上市的生物科技公司</li>
+        <li>聚焦<b>放射性核藥</b>（Radiopharmaceuticals）：診斷顯像 + 靶向核素治療（如 <b>177Lu</b> 標記等）</li>
+        <li>管線覆蓋腫瘤等適應症；核心產品滿足 18A 合資格要求（含 XTR 系列候選藥物）</li>
+      </ul>
+      <h3>核心優勢</h3>
+      <ul class="clean">
+        <li><b>診斷+治療一體化</b>核藥平台，契合全球核藥（theranostics）長期趨勢</li>
+        <li>靶向核素療法（如 PSMA 等方向）為腫瘤精準治療熱點賽道</li>
+        <li>集資規模適中（約10億），適合高風險偏好配置 18A 核藥主題</li>
+      </ul>
+      <h3>主要風險</h3>
+      <ul class="clean">
+        <li class="risk">往績期間<b>持續大額虧損</b>，商業化與現金流壓力大</li>
+        <li class="risk">臨床失敗、審批延遲或核素供應／生產合規風險</li>
+        <li class="risk">核藥准入、定價、醫院放療科舖設進度不確定</li>
+      </ul>
+      <h3>保薦人 · 聆訊後資料集</h3>
+      <p class="meta-line">見聆訊後資料集披露</p>
+      <p class="link meta-line" style="margin-top:4px;">
+        <a href="https://www1.hkexnews.hk/app/sehk/2026/109006/documents/sehk26102801583_c.pdf" target="_blank">聆訊後資料集 sehk26102801583_c.pdf</a>
+      </p>
+      <div class="peer-box">
+        <h4>同行對比：中國同輻（01763.HK）</h4>
+        <p>中國同輻為港股同位素與放射源／核藥相關央企平台，可作核藥賽道流動性與政策環境參考（業務並非完全同質：先通更偏創新核藥研發管線）。</p>
+        <table class="peer-table">
+          <tr><th>維度</th><th>先通國際醫藥-B（IPO 標的）</th><th>中國同輻 01763.HK</th></tr>
+          <tr><td>上市路徑</td><td>18A 生物科技</td><td>已上市主板</td></tr>
+          <tr><td>核心領域</td><td>創新放射性核藥（診斷+治療）</td><td>同位素、放射源、核藥相關</td></tr>
+          <tr><td>收入階段</td><td>早期／管線驅動，持續虧損</td><td>已有經常性業務收入</td></tr>
+          <tr><td>啟示</td><td colspan="2">先通彈性在管線兌現；同輻可作核藥板塊情緒與政策錨。亦可參考 A 股東誠藥業等核藥相關公司估值節奏。</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="ipo-panel" id="panel-tt">
+    <button type="button" class="ipo-panel-head" data-open="tt">
+      <div class="title-wrap">
+        <h2>③ 濤濤車業 <span class="badge blue">★★★★☆</span> <span class="badge">A+H · 301345.SZ</span></h2>
+        <p class="one-liner">全球電動低速車收入第一 · 海外為主 · 高毛利高增長</p>
+      </div>
+      <span class="chev">▼</span>
+    </button>
+    <div class="ipo-panel-body section-inner">
+      <div class="vote-widget" data-company="taotao">
+        <div class="vote-actions">
+          <button type="button" class="vbtn up" data-side="up">📈 升</button>
+          <button type="button" class="vbtn down" data-side="down">📉 跌</button>
+          <span class="vote-status" data-status></span>
+        </div>
+        <div class="meter">
+          <div class="meter-labels">
+            <span class="u" data-lab-up>📈 升 0% (0)</span>
+            <span class="d" data-lab-down>📉 跌 0% (0)</span>
+          </div>
+          <div class="meter-track"><div class="meter-up" data-meter style="width:50%"></div></div>
+        </div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi"><div class="label">2025 收入</div><div class="val up">約 39 億</div></div>
+        <div class="kpi"><div class="label">2025 淨利</div><div class="val up">約 8.2 億</div></div>
+        <div class="kpi"><div class="label">毛利率</div><div class="val up">約 41%</div></div>
+        <div class="kpi"><div class="label">預計集資</div><div class="val">約 19.5 億</div></div>
+      </div>
+      <h3>市場地位</h3>
+      <ul class="clean">
+        <li>按收入計，<b>2025 年全球電動低速車（LSV）第一</b>，市場份額約 <b>10.9%</b></li>
+        <li>產品覆蓋電動低速車、電動滑板車／自行車／平衡車及動力運動等；品牌含 GOTRAX、DENAGO 等</li>
+        <li>海外收入佔比極高（美國為主），已布局北美產能</li>
+      </ul>
+      <h3>核心優勢</h3>
+      <ul class="clean">
+        <li><b>細分賽道全球龍頭</b> + 產品矩陣（休閒／通勤／特種）</li>
+        <li>盈利能力強：淨利率維持雙位數，毛利率約四成</li>
+        <li>已 A 股上市（301345.SZ），H 股有助國際化與融資</li>
+      </ul>
+      <h3>主要風險</h3>
+      <ul class="clean">
+        <li class="risk"><b>高度依賴美國等海外市場</b>，關稅／貿易政策與反傾銷風險突出</li>
+        <li class="risk">低速車門檻相對不高，競爭加劇可能壓縮份額與毛利</li>
+        <li class="risk">消費與渠道庫存波動影響出貨節奏</li>
+      </ul>
+      <h3>保薦人 · 聆訊後資料集</h3>
+      <p class="meta-line">見聆訊後資料集披露</p>
+      <p class="link meta-line" style="margin-top:4px;">
+        <a href="https://www1.hkexnews.hk/app/sehk/2026/108575/documents/sehk26090701489_c.pdf" target="_blank">聆訊後資料集 sehk26090701489_c.pdf</a>
+      </p>
+      <div class="peer-box blue">
+        <h4>同行對比：九號公司-SW（06899.HK）</h4>
+        <p>九號為港股智能短交通／兩輪電自等代表，可作「電動出行出口+品牌」估值與情緒參考（品類不完全相同：濤濤更偏低速車 LSV 與北美渠道）。</p>
+        <table class="peer-table">
+          <tr><th>指標</th><th>濤濤車業（IPO 標的）</th><th>九號公司-SW 06899.HK</th></tr>
+          <tr><td>主業</td><td>電動低速車為主 + 滑板車等</td><td>電動滑板車／電自／服務機器人等</td></tr>
+          <tr><td>全球位置</td><td>電動低速車收入全球約第1（10.9%）</td><td>短交通品牌領先之一</td></tr>
+          <tr><td>市場結構</td><td>海外（美國）為主</td><td>中國+海外</td></tr>
+          <tr><td>啟示</td><td colspan="2">兩者均受益電動出行滲透；濤濤更綁定美國 LSV 與關稅敏感，九號可作港股出行板塊流動性錨。</td></tr>
+        </table>
+      </div>
     </div>
   </div>
 
-  <!-- 完整 13 家列表 -->
-  <div class="section">
-    <h2>已過聆訊公司一覽（13 家）</h2>
-    <p style="font-size:13px;color:var(--gray);margin-bottom:12px;">預計總集資額約 201.7 億港元（按公開估計）</p>
-    <div class="other-item"><div class="num">1</div><div class="body"><div class="cname">坦博爾集團股份有限公司</div><div class="cinfo">預計集資 <b>約 20 億</b></div></div></div>
-    <div class="other-item"><div class="num">2</div><div class="body"><div class="cname">上海哥瑞利軟件股份有限公司</div><div class="cinfo">預計集資 <b>約 10 億</b></div></div></div>
-    <div class="other-item"><div class="num">3</div><div class="body"><div class="cname">永康控股有限公司</div><div class="cinfo">預計集資 <b>約 7.8 億</b></div></div></div>
-    <div class="other-item"><div class="num">4</div><div class="body"><div class="cname">深圳四方精創資訊股份有限公司</div><div class="cinfo">預計集資 <b>約 9.43 億</b></div></div></div>
-    <div class="other-item"><div class="num">5</div><div class="body"><div class="cname">湖南軍信環保股份有限公司 (301109.SZ)</div><div class="cinfo">A+H · 預計集資 <b>約 20 億</b></div></div></div>
-    <div class="other-item"><div class="num">6</div><div class="body"><div class="cname">浙江濤濤車業股份有限公司 (301345.SZ)</div><div class="cinfo">A+H · 預計集資 <b>約 19.5 億</b></div></div></div>
-    <div class="other-item"><div class="num">7</div><div class="body"><div class="cname">安徽希磁科技股份有限公司</div><div class="cinfo">預計集資 <b>約 15 億</b></div></div></div>
-    <div class="other-item"><div class="num">8</div><div class="body"><div class="cname">廣州天賜高新材料股份有限公司 (002709.SZ)</div><div class="cinfo">A+H · 預計集資 <b>約 55 億</b></div></div></div>
-    <div class="other-item"><div class="num">9</div><div class="body"><div class="cname">江蘇瘦西湖文化旅游股份有限公司</div><div class="cinfo">預計集資 <b>約 2.27 億</b></div></div></div>
-    <div class="other-item"><div class="num">10</div><div class="body"><div class="cname">常州微億智造科技股份有限公司</div><div class="cinfo">預計集資 <b>約 8 億</b></div></div></div>
-    <div class="other-item"><div class="num">11</div><div class="body"><div class="cname">深圳創智芯聯科技股份有限公司</div><div class="cinfo">預計集資 <b>約 15 億</b></div></div></div>
-    <div class="other-item"><div class="num">12</div><div class="body"><div class="cname">贛州和美藥業股份有限公司</div><div class="cinfo">18A · 預計集資 <b>約 9.7 億</b>（已延遲上市）</div></div></div>
-    <div class="other-item"><div class="num">13</div><div class="body"><div class="cname">北京先通國際醫藥科技股份有限公司 - B</div><div class="cinfo">18A 核藥 · 預計集資 <b>約 10 億</b> · <a href="https://www1.hkexnews.hk/app/sehk/2026/109006/documents/sehk26102801583_c.pdf" target="_blank">聆訊後資料集</a></div></div></div>
+  <div class="section" id="others">
+    <h2>其他過聆訊公司（簡表）</h2>
+    <p style="font-size:12.5px;color:var(--gray);margin-bottom:10px;text-align:left;">亦可撳 📈／📉 投票；票數全組可見。</p>
+    <div class="other-item"><div class="num">1</div><div class="body"><div class="cname">坦博爾集團</div><div class="cinfo">H · 戶外服飾 · <b>預計集資約 20 億</b></div></div><div class="other-vote" data-ov="tanboer">
+        <div class="ov-btns">
+          <button type="button" class="ovbtn up" data-company="tanboer" data-side="up">📈</button>
+          <button type="button" class="ovbtn down" data-company="tanboer" data-side="down">📉</button>
+        </div>
+        <div class="ov-sum" data-ov-sum="tanboer">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
+      </div></div>
+    <div class="other-item"><div class="num">2</div><div class="body"><div class="cname">上海哥瑞利軟件</div><div class="cinfo">H · 18C · 半導體 IMSS · <b>預計集資約 10 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108262/documents/sehk26062301713_c.pdf" target="_blank">聆訊後資料集</a></div></div><div class="other-vote" data-ov="glorysoft">
+        <div class="ov-btns">
+          <button type="button" class="ovbtn up" data-company="glorysoft" data-side="up">📈</button>
+          <button type="button" class="ovbtn down" data-company="glorysoft" data-side="down">📉</button>
+        </div>
+        <div class="ov-sum" data-ov-sum="glorysoft">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
+      </div></div>
+    <div class="other-item"><div class="num">3</div><div class="body"><div class="cname">永康控股</div><div class="cinfo">H · 集裝箱堆場／物流 · <b>預計集資約 7.8 億</b></div></div><div class="other-vote" data-ov="yongkang">
+        <div class="ov-btns">
+          <button type="button" class="ovbtn up" data-company="yongkang" data-side="up">📈</button>
+          <button type="button" class="ovbtn down" data-company="yongkang" data-side="down">📉</button>
+        </div>
+        <div class="ov-sum" data-ov-sum="yongkang">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
+      </div></div>
+    <div class="other-item"><div class="num">4</div><div class="body"><div class="cname">深圳四方精創</div><div class="cinfo">H · 金融科技／IT · <b>預計集資約 9.43 億</b></div></div><div class="other-vote" data-ov="sifang">
+        <div class="ov-btns">
+          <button type="button" class="ovbtn up" data-company="sifang" data-side="up">📈</button>
+          <button type="button" class="ovbtn down" data-company="sifang" data-side="down">📉</button>
+        </div>
+        <div class="ov-sum" data-ov-sum="sifang">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
+      </div></div>
+    <div class="other-item"><div class="num">5</div><div class="body"><div class="cname">湖南軍信環保（301109.SZ）</div><div class="cinfo">A+H · 環保公用／垃圾焚燒 · <b>預計集資約 20 億</b></div></div><div class="other-vote" data-ov="junxin">
+        <div class="ov-btns">
+          <button type="button" class="ovbtn up" data-company="junxin" data-side="up">📈</button>
+          <button type="button" class="ovbtn down" data-company="junxin" data-side="down">📉</button>
+        </div>
+        <div class="ov-sum" data-ov-sum="junxin">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
+      </div></div>
+    <div class="other-item"><div class="num">6</div><div class="body"><div class="cname">安徽希磁科技</div><div class="cinfo">H · 磁性傳感器 IDM · <b>預計集資約 15 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108258/documents/sehk26092802069_c.pdf" target="_blank">聆訊後資料集</a></div></div><div class="other-vote" data-ov="sinomags">
+        <div class="ov-btns">
+          <button type="button" class="ovbtn up" data-company="sinomags" data-side="up">📈</button>
+          <button type="button" class="ovbtn down" data-company="sinomags" data-side="down">📉</button>
+        </div>
+        <div class="ov-sum" data-ov-sum="sinomags">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
+      </div></div>
+    <div class="other-item"><div class="num">7</div><div class="body"><div class="cname">江蘇瘦西湖文化旅遊</div><div class="cinfo">H · 文旅 · <b>預計集資約 2.27 億</b></div></div><div class="other-vote" data-ov="shouxihu">
+        <div class="ov-btns">
+          <button type="button" class="ovbtn up" data-company="shouxihu" data-side="up">📈</button>
+          <button type="button" class="ovbtn down" data-company="shouxihu" data-side="down">📉</button>
+        </div>
+        <div class="ov-sum" data-ov-sum="shouxihu">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
+      </div></div>
+    <div class="other-item"><div class="num">8</div><div class="body"><div class="cname">常州微億智造</div><div class="cinfo">H · 智能製造 · <b>預計集資約 8 億</b></div></div><div class="other-vote" data-ov="weiyi">
+        <div class="ov-btns">
+          <button type="button" class="ovbtn up" data-company="weiyi" data-side="up">📈</button>
+          <button type="button" class="ovbtn down" data-company="weiyi" data-side="down">📉</button>
+        </div>
+        <div class="ov-sum" data-ov-sum="weiyi">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
+      </div></div>
+    <div class="other-item"><div class="num">9</div><div class="body"><div class="cname">深圳創智芯聯</div><div class="cinfo">H · 半導體／PCB 鍍層 · <b>預計集資約 15 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108473/documents/sehk26101900081_c.pdf" target="_blank">聆訊後資料集</a></div></div><div class="other-vote" data-ov="chuangzhi">
+        <div class="ov-btns">
+          <button type="button" class="ovbtn up" data-company="chuangzhi" data-side="up">📈</button>
+          <button type="button" class="ovbtn down" data-company="chuangzhi" data-side="down">📉</button>
+        </div>
+        <div class="ov-sum" data-ov-sum="chuangzhi">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
+      </div></div>
+    <div class="other-item"><div class="num">10</div><div class="body"><div class="cname">贛州和美藥業-B</div><div class="cinfo">H · 18A · 小分子創新藥 · <b>預計集資約 9.7 億</b> ·  <a href="https://www1.hkexnews.hk/app/sehk/2026/108622/documents/sehk26102001467_c.pdf" target="_blank">聆訊後資料集</a></div></div><div class="other-vote" data-ov="hemei">
+        <div class="ov-btns">
+          <button type="button" class="ovbtn up" data-company="hemei" data-side="up">📈</button>
+          <button type="button" class="ovbtn down" data-company="hemei" data-side="down">📉</button>
+        </div>
+        <div class="ov-sum" data-ov-sum="hemei">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
+      </div></div>
   </div>
 
   <div class="section">
     <h2>打新建議（精簡）</h2>
     <ul class="clean">
-      <li><b>★★★★★ 先通國際醫藥-B</b>：中國創新核藥領跑者 + 全產業鏈能力 + 核心產品臨近商業化，適合看好核藥長期賽道的投資者（高風險高潛力）。</li>
-      <li><b>★★★★★ 天賜材料</b>：基本面與業績兌現最強，A+H 流動性佳，適合相對穩健配置。</li>
-      <li>其餘標的建議按個人風險承受度與行業偏好個別篩選。</li>
+      <li><b>★★★★★</b> 天賜材料：全球電解液龍頭，2026H1 淨利大增，基本面最強。</li>
+      <li><b>★★★★★</b> 先通國際醫藥-B：18A 放射性核藥（診斷+治療），賽道長邏輯清晰；管線與虧損風險高，適高風險偏好。</li>
+      <li><b>★★★★☆</b> 濤濤車業：全球電動低速車收入第一（約10.9%），高毛利高海外佔比；需密切跟蹤美國關稅與貿易政策。</li>
     </ul>
-    <p style="margin-top:12px;font-size:12.5px;color:var(--gray);text-align:left;">注：僅供參考，不構成投資建議。港股打新存在破發風險。和美藥業已宣布延遲上市。</p>
+    <p style="margin-top:12px;font-size:12.5px;color:var(--gray);text-align:left;">注：僅供參考，不構成投資建議。港股打新存在破發風險。</p>
   </div>
   <div class="footer">
-    輝立證券新股部 ｜ 數據來源：港交所聆訊後資料集 ｜ 2026年11月10日<br>
-    <a href="https://pshk-ipo.github.io/phillip-ipo/" style="color:#718096;">GitHub Pages 永久免費版</a>
+    輝立証劵新股部 ｜ 數據來源：港交所聆訊後資料集 ｜ 2026年11月10日<br>
+    <a href="https://elizabeth20041021-droid.github.io/phillip-ipo/" style="color:#718096;">GitHub Pages 永久免費版</a>
   </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function () {
+  // ===== Supabase 設定 =====
+  // Project URL 必須是這種格式，不要加 /rest/v1/
   var SUPABASE_URL = "https://dqvqtmdnuzryowktbtgt.supabase.co";
+  // 請到 Supabase → Project Settings → API → 複製完整 anon public key 貼在下一行
   var SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxdnF0bWRudXpyeW93a3RidGd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NTEzOTgsImV4cCI6MjEwODIyNzM5OH0.PWvX7llsDDSOd5DdA7NtGwAW14jD34dj1aRpk7m-YPk";
 
-  var KEYS = ["xiantong", "tinci", "hosin"];
-  var DB_ID = { xiantong: "xiantong", tinci: "tianci", hosin: "hongxinyu" };
-  var NAMES = { xiantong: "先通國際醫藥-B", tinci: "天賜材料", hosin: "宏芯宇電子" };
-  var MY_STORE = "ipo_my_vote_supabase_v2";
+  var KEYS = ["tinci","sinotau","taotao","tanboer","glorysoft","yongkang","sifang","junxin","sinomags","shouxihu","weiyi","chuangzhi","hemei"];
+  var DB_ID = {
+    tinci: "tianci", sinotau: "sinotau", taotao: "taotao",
+    tanboer: "tanboer", glorysoft: "glorysoft", yongkang: "yongkang",
+    sifang: "sifang", junxin: "junxin", sinomags: "sinomags",
+    shouxihu: "shouxihu", weiyi: "weiyi", chuangzhi: "chuangzhi", hemei: "hemei"
+  };
+  var NAMES = {
+    tinci: "天賜材料", sinotau: "先通國際醫藥-B", taotao: "濤濤車業",
+    tanboer: "坦博爾", glorysoft: "哥瑞利軟件", yongkang: "永康控股",
+    sifang: "四方精創", junxin: "軍信環保", sinomags: "希磁科技",
+    shouxihu: "瘦西湖文旅", weiyi: "微億智造", chuangzhi: "創智芯聯", hemei: "和美藥業-B"
+  };
+  var MY_STORE = "ipo_my_vote_supabase_v1";
 
   var bar = document.getElementById("connBar");
   function setBar(msg, isErr) {
@@ -449,7 +542,8 @@
     setBar("Supabase 初始化失敗：" + (e && e.message ? e.message : e), true);
   }
 
-  var counts = { xiantong: { up: 0, down: 0 }, tinci: { up: 0, down: 0 }, hosin: { up: 0, down: 0 } };
+  var counts = {};
+  KEYS.forEach(function (k) { counts[k] = { up: 0, down: 0 }; });
   var busy = false;
 
   function loadMy() {
@@ -499,6 +593,14 @@
         else if (my[k] === "down") status.innerHTML = "你已投：<b>跌</b> · 全組共 " + total + " 票";
         else status.innerHTML = total ? ("全組共 <b>" + total + "</b> 票") : "尚未有票";
       }
+      var ovSum = document.querySelector('[data-ov-sum="' + k + '"]');
+      if (ovSum) {
+        ovSum.innerHTML = '🐮 <b class="u">' + up + '</b> · 🐻 <b class="d">' + down + '</b>';
+      }
+      document.querySelectorAll('.ovbtn[data-company="' + k + '"]').forEach(function (btn) {
+        btn.classList.remove("on");
+        if (my[k] && btn.getAttribute("data-side") === my[k]) btn.classList.add("on");
+      });
     });
   }
 
@@ -533,7 +635,7 @@
     }
     if (busy) return;
     busy = true;
-    document.querySelectorAll(".vbtn").forEach(function (b) { b.disabled = true; });
+    document.querySelectorAll(".vbtn, .ovbtn").forEach(function (b) { b.disabled = true; });
     var my = loadMy();
     var prev = my[company];
     var dbId = DB_ID[company];
@@ -566,7 +668,7 @@
       setBar("寫入失敗：" + msg, true);
     }
     busy = false;
-    document.querySelectorAll(".vbtn").forEach(function (b) { b.disabled = false; });
+    document.querySelectorAll(".vbtn, .ovbtn").forEach(function (b) { b.disabled = false; });
   }
 
   document.querySelectorAll(".vote-widget").forEach(function (w) {
@@ -576,6 +678,13 @@
         e.stopPropagation();
         cast(w.getAttribute("data-company"), btn.getAttribute("data-side"));
       });
+    });
+  });
+  document.querySelectorAll(".ovbtn").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      cast(btn.getAttribute("data-company"), btn.getAttribute("data-side"));
     });
   });
 
