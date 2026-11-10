@@ -576,22 +576,23 @@
           '<span class="vote-pill down">🐻 ' + down + '</span>';
       }
       var w = document.querySelector('.vote-widget[data-company="' + k + '"]');
-      if (!w) return;
-      var labUp = w.querySelector("[data-lab-up]");
-      var labDown = w.querySelector("[data-lab-down]");
-      var meter = w.querySelector("[data-meter]");
-      var status = w.querySelector("[data-status]");
-      if (labUp) labUp.textContent = "📈 升 " + upPct + "% (" + up + ")";
-      if (labDown) labDown.textContent = "📉 跌 " + downPct + "% (" + down + ")";
-      if (meter) meter.style.width = (total ? upPct : 50) + "%";
-      w.querySelectorAll(".vbtn").forEach(function (btn) {
-        btn.classList.remove("on");
-        if (my[k] && btn.getAttribute("data-side") === my[k]) btn.classList.add("on");
-      });
-      if (status) {
-        if (my[k] === "up") status.innerHTML = "你已投：<b>升</b> · 全組共 " + total + " 票";
-        else if (my[k] === "down") status.innerHTML = "你已投：<b>跌</b> · 全組共 " + total + " 票";
-        else status.innerHTML = total ? ("全組共 <b>" + total + "</b> 票") : "尚未有票";
+      if (w) {
+        var labUp = w.querySelector("[data-lab-up]");
+        var labDown = w.querySelector("[data-lab-down]");
+        var meter = w.querySelector("[data-meter]");
+        var status = w.querySelector("[data-status]");
+        if (labUp) labUp.textContent = "📈 升 " + upPct + "% (" + up + ")";
+        if (labDown) labDown.textContent = "📉 跌 " + downPct + "% (" + down + ")";
+        if (meter) meter.style.width = (total ? upPct : 50) + "%";
+        w.querySelectorAll(".vbtn").forEach(function (btn) {
+          btn.classList.remove("on");
+          if (my[k] && btn.getAttribute("data-side") === my[k]) btn.classList.add("on");
+        });
+        if (status) {
+          if (my[k] === "up") status.innerHTML = "你已投：<b>升</b> · 全組共 " + total + " 票";
+          else if (my[k] === "down") status.innerHTML = "你已投：<b>跌</b> · 全組共 " + total + " 票";
+          else status.innerHTML = total ? ("全組共 <b>" + total + "</b> 票") : "尚未有票";
+        }
       }
       var ovSum = document.querySelector('[data-ov-sum="' + k + '"]');
       if (ovSum) {
