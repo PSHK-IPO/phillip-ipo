@@ -147,12 +147,19 @@
     font-size: 18px; color: var(--navy); border-left: 4px solid var(--gold);
     padding-left: 12px; margin-bottom: 8px;
   }
-
   .other-item {
     display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border);
     font-size: 13.5px; text-align: left; align-items: flex-start; flex-wrap: wrap;
   }
+  .other-item:last-child { border-bottom: none; }
+  .other-item .num {
+    width: 28px; height: 28px; border-radius: 50%; background: #edf2f7; color: var(--navy);
+    font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
   .other-item .body { flex: 1; min-width: 180px; }
+  .other-item .cname { font-weight: 700; color: var(--navy); }
+  .other-item .cinfo { color: var(--gray); font-size: 12.5px; margin-top: 2px; }
+  .other-item .cinfo a { color: var(--blue); }
   .other-vote {
     display: flex; flex-direction: column; gap: 6px; align-items: flex-end;
     flex-shrink: 0; margin-left: auto;
@@ -166,19 +173,9 @@
   .ovbtn:active { transform: scale(.97); }
   .ovbtn.up.on { background: #c6f6d5; border-color: #68d391; color: #276749; font-weight: 700; }
   .ovbtn.down.on { background: #fed7d7; border-color: #fc8181; color: #c53030; font-weight: 700; }
-  .other-vote .ov-sum {
-    font-size: 12px; font-variant-numeric: tabular-nums; color: var(--gray);
-  }
+  .other-vote .ov-sum { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--gray); }
   .other-vote .ov-sum b.u { color: #276749; }
   .other-vote .ov-sum b.d { color: #c53030; }
-  .other-item:last-child { border-bottom: none; }
-  .other-item .num {
-    width: 28px; height: 28px; border-radius: 50%; background: #edf2f7; color: var(--navy);
-    font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .other-item .cname { font-weight: 700; color: var(--navy); }
-  .other-item .cinfo { color: var(--gray); font-size: 12.5px; margin-top: 2px; }
-  .other-item .cinfo a { color: var(--blue); }
   .footer {
     text-align: center; font-size: 12px; color: #718096;
     margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border);
@@ -194,362 +191,50 @@
   }
   .conn-bar.show { display: block; }
   .conn-bar.err { background: #fff5f5; border-color: #feb2b2; color: #9b2c2c; }
+  .loading { text-align: center; padding: 40px; color: var(--gray); }
 </style>
 </head>
 <body>
 <div class="topbar">
   <div class="brand">輝立証劵新股部</div>
-  <div class="meta">過聆訊後新股推薦 · 2026年11月10日</div>
+  <div class="meta" id="topMeta">過聆訊後新股推薦</div>
 </div>
 <div class="wrap">
-  <div class="hero" id="overview">
-    <h1>過聆訊後新股推薦</h1>
-    <div class="sub">精選三家 · 點擊卡片展開詳情 ｜ 數據來源：港交所聆訊後資料集</div>
-    <div class="hero-cards">
-      <button type="button" class="hero-card" data-open="tc" id="hero-tc">
-        <div class="stars">★★★★★</div>
-        <div class="name">① 天賜材料</div>
-        <div class="tag">A+H · 電解液龍頭</div>
-        <div class="fund">預計集資 <b>約55億</b></div>
-        <div class="vote-sum" data-sum="tinci"><span class="vote-pill up">🐮 0</span><span class="vote-pill down">🐻 0</span></div>
-        <div class="hint">▼ 點擊展開全部詳情</div>
-      </button>
-      <button type="button" class="hero-card" data-open="xt" id="hero-xt">
-        <div class="stars">★★★★★</div>
-        <div class="name">② 先通國際醫藥-B</div>
-        <div class="tag">H · 18A · 放射性核藥</div>
-        <div class="fund">預計集資 <b>約10億</b></div>
-        <div class="vote-sum" data-sum="sinotau"><span class="vote-pill up">🐮 0</span><span class="vote-pill down">🐻 0</span></div>
-        <div class="hint">▼ 點擊展開全部詳情</div>
-      </button>
-      <button type="button" class="hero-card" data-open="tt" id="hero-tt">
-        <div class="stars">★★★★☆</div>
-        <div class="name">③ 濤濤車業</div>
-        <div class="tag">A+H · 電動低速車全球第一</div>
-        <div class="fund">預計集資 <b>約19.5億</b></div>
-        <div class="vote-sum" data-sum="taotao"><span class="vote-pill up">🐮 0</span><span class="vote-pill down">🐻 0</span></div>
-        <div class="hint">▼ 點擊展開全部詳情</div>
-      </button>
-    </div>
-  </div>
-  <div id="connBar" class="conn-bar">正在連接投票伺服器…</div>
-  <div class="vote-how">
-    <b>投票互動：</b>前三詳情與下方簡表均可撳 <b>📈 升</b>／<b>📉 跌</b>；票數全組可見。再撳可取消。
-  </div>
-  <div class="ipo-panel" id="panel-tc">
-    <button type="button" class="ipo-panel-head" data-open="tc">
-      <div class="title-wrap">
-        <h2>① 天賜材料 <span class="badge green">★★★★★</span> <span class="badge">A+H · 002709.SZ</span></h2>
-        <p class="one-liner">全球電解液第一 · 2026H1 淨利 +968% · 基本面仍最強</p>
-      </div>
-      <span class="chev">▼</span>
-    </button>
-    <div class="ipo-panel-body section-inner">
-      <div class="vote-widget" data-company="tinci">
-        <div class="vote-actions">
-          <button type="button" class="vbtn up" data-side="up">📈 升</button>
-          <button type="button" class="vbtn down" data-side="down">📉 跌</button>
-          <span class="vote-status" data-status></span>
-        </div>
-        <div class="meter">
-          <div class="meter-labels">
-            <span class="u" data-lab-up>📈 升 0% (0)</span>
-            <span class="d" data-lab-down>📉 跌 0% (0)</span>
-          </div>
-          <div class="meter-track"><div class="meter-up" data-meter style="width:50%"></div></div>
-        </div>
-      </div>
-      <div class="kpi-row"><div class="kpi"><div class="label">2025 收入</div><div class="val">約 167 億</div></div><div class="kpi"><div class="label">2026H1 收入</div><div class="val up">147 億 (+109%)</div></div><div class="kpi"><div class="label">2026H1 淨利</div><div class="val up">28.6 億 (+968%)</div></div><div class="kpi"><div class="label">預計集資</div><div class="val">約 55 億</div></div></div>
-      <h3>市場地位</h3>
-      <ul class="clean"><li><b>全球電解液連續約 10 年出貨量第一</b>，2025 份額約 <b>36%</b></li><li>全球最大六氟磷酸鋰及 LiFSI（鋰鹽添加劑）供應商之一</li><li>垂直一體化（溶質 + 添加劑 + 電解液）成本優勢明顯</li></ul>
-      <h3>核心優勢</h3>
-      <ul class="clean"><li><b>2026 業績 V 型反轉最強</b>：H1 淨利同比近 10 倍</li><li>全球化布局：募資約 80% 投海外（摩洛哥、美國等）</li><li>固態電解質等新技術儲備</li><li>A+H 後流動性與國際投資者覆蓋提升</li></ul>
-      <h3>主要風險</h3>
-      <ul class="clean"><li class="risk">鋰電行業<strong>強週期性</strong></li><li class="risk">A 股 2026 年迄今跌幅約 <b>32%</b></li><li class="risk">受原材料與下游庫存波動影響</li></ul>
-      <h3>保薦人 · 聆訊後資料集</h3>
-      <p class="meta-line"><b>聯席保薦人：摩根大通、中信證券、廣發證券</b></p>
-      <p class="link meta-line" style="margin-top:4px;">
-        <a href="https://www1.hkexnews.hk/app/sehk/2026/108340/documents/sehk26100500007_c.pdf" target="_blank">聆訊後資料集 sehk26100500007_c.pdf</a>
-      </p>
-      <div class="peer-box blue"><h4>同行對比：新宙邦（300037.SZ）</h4><p>新宙邦為電解液行業「雙雄」之一，海外客戶綁定較深，可作份額與盈利對照。</p>
-<table class="peer-table"><tr><th>指標</th><th>天賜材料（IPO 標的）</th><th>新宙邦 300037.SZ</th></tr><tr><td>全球電解液份額（約）</td><td><b>約 32–36%（第一）</b></td><td>約 13%（第三）</td></tr><tr><td>2026H1 淨利增速</td><td><b>+968%</b></td><td>約 +100% 量級</td></tr><tr><td>模式特點</td><td>高度垂直一體化（6F / LiFSI / 添加劑）</td><td>技術與海外客戶綁定較強</td></tr><tr><td>海外布局</td><td>摩洛哥、美國（霍尼韋爾合資）等</td><td>波蘭等已投產 / 擴建</td></tr><tr><td>啟示</td><td colspan="2">天賜份額與一體化成本優勢領先；新宙邦海外與客戶結構可作互補參考。</td></tr></table></div>
-    </div>
-  </div>
-  
-  <div class="ipo-panel" id="panel-xt">
-    <button type="button" class="ipo-panel-head" data-open="xt">
-      <div class="title-wrap">
-        <h2>② 先通國際醫藥-B <span class="badge green">★★★★★</span> <span class="badge">H · 18A 生物科技</span></h2>
-        <p class="one-liner">放射性核藥（診斷+治療）· 18A · 管線含靶向核素療法</p>
-      </div>
-      <span class="chev">▼</span>
-    </button>
-    <div class="ipo-panel-body section-inner">
-      <div class="vote-widget" data-company="sinotau">
-        <div class="vote-actions">
-          <button type="button" class="vbtn up" data-side="up">📈 升</button>
-          <button type="button" class="vbtn down" data-side="down">📉 跌</button>
-          <span class="vote-status" data-status></span>
-        </div>
-        <div class="meter">
-          <div class="meter-labels">
-            <span class="u" data-lab-up>📈 升 0% (0)</span>
-            <span class="d" data-lab-down>📉 跌 0% (0)</span>
-          </div>
-          <div class="meter-track"><div class="meter-up" data-meter style="width:50%"></div></div>
-        </div>
-      </div>
-      <div class="kpi-row">
-        <div class="kpi"><div class="label">路徑</div><div class="val">18A 生物科技</div></div>
-        <div class="kpi"><div class="label">往績</div><div class="val">持續虧損</div></div>
-        <div class="kpi"><div class="label">主業</div><div class="val">放射性核藥</div></div>
-        <div class="kpi"><div class="label">預計集資</div><div class="val">約 10 億</div></div>
-      </div>
-      <h3>市場地位</h3>
-      <ul class="clean">
-        <li>按《上市規則》<b>第 18A 章</b>申請主板上市的生物科技公司</li>
-        <li>聚焦<b>放射性核藥</b>（Radiopharmaceuticals）：診斷顯像 + 靶向核素治療（如 <b>177Lu</b> 標記等）</li>
-        <li>管線覆蓋腫瘤等適應症；核心產品滿足 18A 合資格要求（含 XTR 系列候選藥物）</li>
-      </ul>
-      <h3>核心優勢</h3>
-      <ul class="clean">
-        <li><b>診斷+治療一體化</b>核藥平台，契合全球核藥（theranostics）長期趨勢</li>
-        <li>靶向核素療法（如 PSMA 等方向）為腫瘤精準治療熱點賽道</li>
-        <li>集資規模適中（約10億），適合高風險偏好配置 18A 核藥主題</li>
-      </ul>
-      <h3>主要風險</h3>
-      <ul class="clean">
-        <li class="risk">往績期間<b>持續大額虧損</b>，商業化與現金流壓力大</li>
-        <li class="risk">臨床失敗、審批延遲或核素供應／生產合規風險</li>
-        <li class="risk">核藥准入、定價、醫院放療科舖設進度不確定</li>
-      </ul>
-      <h3>保薦人 · 聆訊後資料集</h3>
-      <p class="meta-line"><b>聯席保薦人：廣發證券、中金公司、中信證券</b></p>
-      <p class="link meta-line" style="margin-top:4px;">
-        <a href="https://www1.hkexnews.hk/app/sehk/2026/109006/documents/sehk26102801583_c.pdf" target="_blank">聆訊後資料集 sehk26102801583_c.pdf</a>
-      </p>
-      <div class="peer-box">
-        <h4>同行對比：中國同輻（01763.HK）</h4>
-        <p>中國同輻為港股同位素／放射源及核藥相關央企平台；先通為 18A 創新核藥（診斷+治療）管線公司。同輻可作板塊政策與流動性錨，先通彈性在管線獲批與商業化節奏。</p>
-        <table class="peer-table">
-          <tr><th>維度</th><th>先通國際醫藥-B</th><th>中國同輻 01763.HK</th></tr>
-          <tr><td>定位</td><td>18A 創新放射性核藥（theranostics）</td><td>同位素、放射源、核藥產業平台</td></tr>
-          <tr><td>收入規模</td><td>2025 年收入約 0.99 億；2026H1 約 0.61 億（+66%）</td><td>已有穩定經常性收入（央企平台）</td></tr>
-          <tr><td>盈利</td><td>持續大額虧損（2025 淨虧約 6.2 億）</td><td>已盈利主業</td></tr>
-          <tr><td>管線／產品</td><td>13 項資產；核心 XTR008（177Lu-SSTR，Lutathera 類仿製，預計 2026/12 獲批）等</td><td>供應鏈+產品組合更偏產業配套</td></tr>
-          <tr><td>啟示</td><td colspan="2">先通看點在 XTR008 等獲批與放量；虧損與資負債表壓力大。同輻更適合作為核藥產業鏈情緒與政策參考，而非一比一基本面對標。</td></tr>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="ipo-panel" id="panel-tt">
-    <button type="button" class="ipo-panel-head" data-open="tt">
-      <div class="title-wrap">
-        <h2>③ 濤濤車業 <span class="badge blue">★★★★☆</span> <span class="badge">A+H · 301345.SZ</span></h2>
-        <p class="one-liner">全球電動低速車收入第一 · 海外為主 · 高毛利高增長</p>
-      </div>
-      <span class="chev">▼</span>
-    </button>
-    <div class="ipo-panel-body section-inner">
-      <div class="vote-widget" data-company="taotao">
-        <div class="vote-actions">
-          <button type="button" class="vbtn up" data-side="up">📈 升</button>
-          <button type="button" class="vbtn down" data-side="down">📉 跌</button>
-          <span class="vote-status" data-status></span>
-        </div>
-        <div class="meter">
-          <div class="meter-labels">
-            <span class="u" data-lab-up>📈 升 0% (0)</span>
-            <span class="d" data-lab-down>📉 跌 0% (0)</span>
-          </div>
-          <div class="meter-track"><div class="meter-up" data-meter style="width:50%"></div></div>
-        </div>
-      </div>
-      <div class="kpi-row">
-        <div class="kpi"><div class="label">2025 收入</div><div class="val up">約 39 億</div></div>
-        <div class="kpi"><div class="label">2025 淨利</div><div class="val up">約 8.2 億</div></div>
-        <div class="kpi"><div class="label">毛利率</div><div class="val up">約 41%</div></div>
-        <div class="kpi"><div class="label">預計集資</div><div class="val">約 19.5 億</div></div>
-      </div>
-      <h3>市場地位</h3>
-      <ul class="clean">
-        <li>按收入計，<b>2025 年全球電動低速車（LSV）第一</b>，市場份額約 <b>10.9%</b></li>
-        <li>產品覆蓋電動低速車、電動滑板車／自行車／平衡車及動力運動等；品牌含 GOTRAX、DENAGO 等</li>
-        <li>海外收入佔比極高（美國為主），已布局北美產能</li>
-      </ul>
-      <h3>核心優勢</h3>
-      <ul class="clean">
-        <li><b>細分賽道全球龍頭</b> + 產品矩陣（休閒／通勤／特種）</li>
-        <li>盈利能力強：淨利率維持雙位數，毛利率約四成</li>
-        <li>已 A 股上市（301345.SZ），H 股有助國際化與融資</li>
-      </ul>
-      <h3>主要風險</h3>
-      <ul class="clean">
-        <li class="risk"><b>高度依賴美國等海外市場</b>，關稅／貿易政策與反傾銷風險突出</li>
-        <li class="risk">低速車門檻相對不高，競爭加劇可能壓縮份額與毛利</li>
-        <li class="risk">消費與渠道庫存波動影響出貨節奏</li>
-      </ul>
-      <h3>保薦人 · 聆訊後資料集</h3>
-      <p class="meta-line"><b>獨家保薦人：中信證券</b></p>
-      <p class="link meta-line" style="margin-top:4px;">
-        <a href="https://www1.hkexnews.hk/app/sehk/2026/108575/documents/sehk26090701489_c.pdf" target="_blank">聆訊後資料集 sehk26090701489_c.pdf</a>
-      </p>
-      <div class="peer-box blue">
-        <h4>同行對比：九號公司-WD（689009.SH）</h4>
-        <p>九號為 A 股智能短交通＋服務機器人龍頭（科創板）。與濤濤同屬「電動出行／微出行」大方向，但品類與市場結構差異大：濤濤以<strong>全球電動低速車（LSV）收入第一</strong>、美國為主；九號以<strong>國內電自＋滑板車／平衡車＋割草機器人</strong>為主。下表用 2025 年公開數據對照。</p>
-        <table class="peer-table">
-          <tr><th>指標（約）</th><th>濤濤車業 301345.SZ</th><th>九號公司-WD 689009.SH</th></tr>
-          <tr><td>2025 收入</td><td>約 39.4 億（PHIP）</td><td>約 212.8 億（+50%）</td></tr>
-          <tr><td>2025 淨利</td><td>約 8.2 億量級；淨利率雙位數</td><td>歸母約 17.6 億（+62%）；淨利率約 8.3%</td></tr>
-          <tr><td>毛利率</td><td>約 41%（2025）</td><td>約 29.6%（2025）</td></tr>
-          <tr><td>核心品類</td><td>電動低速車收入佔比升至約 50%（2025）</td><td>電自收入約 119 億（佔比超五成）；滑板車／平衡車約 43 億</td></tr>
-          <tr><td>市場地位</td><td>全球 LSV 收入第 1，份額約 10.9%</td><td>國內智能短交通頭部；電自累計出貨破千萬台級</td></tr>
-          <tr><td>區域結構</td><td>海外收入 &gt;97%；美國約 82.8%</td><td>境內約 63%／境外約 37%</td></tr>
-          <tr><td>主要風險差</td><td>美國關稅、反傾銷、LSV 競爭加劇</td><td>國標切換、兩輪車價格戰、費用投放</td></tr>
-          <tr><td>啟示</td><td colspan="2">濤濤：更「小而美」、高毛利、強綁定美國 LSV 滲透；彈性與政策風險都更大。九號：規模與產品矩陣更完整，可作電動出行板塊估值與情緒錨，但非 LSV 一比一對標。</td></tr>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="section" id="others">
-    <h2>其他過聆訊公司（簡表）</h2>
-    <p style="font-size:12.5px;color:var(--gray);margin-bottom:10px;text-align:left;">亦可撳 📈／📉 投票；票數全組可見。無個別 PDF 時連至披露易「新上市資料」。</p>
-    <div class="other-item"><div class="num">1</div><div class="body"><div class="cname">坦博爾集團</div><div class="cinfo">H · 戶外服飾 · 集資約 <b>20 億</b> · 保薦人見披露易 · <a href="https://www1.hkexnews.hk/app/appindex.html?lang=zh" target="_blank">披露易</a></div></div><div class="other-vote" data-ov="tanboer">
-        <div class="ov-btns">
-          <button type="button" class="ovbtn up" data-company="tanboer" data-side="up">📈</button>
-          <button type="button" class="ovbtn down" data-company="tanboer" data-side="down">📉</button>
-        </div>
-        <div class="ov-sum" data-ov-sum="tanboer">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
-      </div></div>
-    <div class="other-item"><div class="num">2</div><div class="body"><div class="cname">上海哥瑞利軟件</div><div class="cinfo">H · 18C · 半導體 IMSS · 集資約 <b>10 億</b> · 保薦人見披露易 · <a href="https://www1.hkexnews.hk/app/sehk/2026/108262/documents/sehk26062301713_c.pdf" target="_blank">聆訊後資料集</a></div></div><div class="other-vote" data-ov="glorysoft">
-        <div class="ov-btns">
-          <button type="button" class="ovbtn up" data-company="glorysoft" data-side="up">📈</button>
-          <button type="button" class="ovbtn down" data-company="glorysoft" data-side="down">📉</button>
-        </div>
-        <div class="ov-sum" data-ov-sum="glorysoft">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
-      </div></div>
-    <div class="other-item"><div class="num">3</div><div class="body"><div class="cname">永康控股</div><div class="cinfo">H · 集裝箱堆場／物流 · 集資約 <b>7.8 億</b> · 保薦人見披露易 · <a href="https://www1.hkexnews.hk/app/appindex.html?lang=zh" target="_blank">披露易</a></div></div><div class="other-vote" data-ov="yongkang">
-        <div class="ov-btns">
-          <button type="button" class="ovbtn up" data-company="yongkang" data-side="up">📈</button>
-          <button type="button" class="ovbtn down" data-company="yongkang" data-side="down">📉</button>
-        </div>
-        <div class="ov-sum" data-ov-sum="yongkang">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
-      </div></div>
-    <div class="other-item"><div class="num">4</div><div class="body"><div class="cname">深圳四方精創</div><div class="cinfo">H · 金融科技／IT · 集資約 <b>9.43 億</b> · 保薦人見披露易 · <a href="https://www1.hkexnews.hk/app/appindex.html?lang=zh" target="_blank">披露易</a></div></div><div class="other-vote" data-ov="sifang">
-        <div class="ov-btns">
-          <button type="button" class="ovbtn up" data-company="sifang" data-side="up">📈</button>
-          <button type="button" class="ovbtn down" data-company="sifang" data-side="down">📉</button>
-        </div>
-        <div class="ov-sum" data-ov-sum="sifang">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
-      </div></div>
-    <div class="other-item"><div class="num">5</div><div class="body"><div class="cname">湖南軍信環保（301109.SZ）</div><div class="cinfo">A+H · 環保公用／垃圾焚燒 · 集資約 <b>20 億</b> · 保薦人見披露易 · <a href="https://www1.hkexnews.hk/app/appindex.html?lang=zh" target="_blank">披露易</a></div></div><div class="other-vote" data-ov="junxin">
-        <div class="ov-btns">
-          <button type="button" class="ovbtn up" data-company="junxin" data-side="up">📈</button>
-          <button type="button" class="ovbtn down" data-company="junxin" data-side="down">📉</button>
-        </div>
-        <div class="ov-sum" data-ov-sum="junxin">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
-      </div></div>
-    <div class="other-item"><div class="num">6</div><div class="body"><div class="cname">安徽希磁科技</div><div class="cinfo">H · 磁性傳感器 IDM · 集資約 <b>15 億</b> · 保薦人見披露易 · <a href="https://www1.hkexnews.hk/app/sehk/2026/108258/documents/sehk26092802069_c.pdf" target="_blank">聆訊後資料集</a></div></div><div class="other-vote" data-ov="sinomags">
-        <div class="ov-btns">
-          <button type="button" class="ovbtn up" data-company="sinomags" data-side="up">📈</button>
-          <button type="button" class="ovbtn down" data-company="sinomags" data-side="down">📉</button>
-        </div>
-        <div class="ov-sum" data-ov-sum="sinomags">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
-      </div></div>
-    <div class="other-item"><div class="num">7</div><div class="body"><div class="cname">江蘇瘦西湖文化旅遊</div><div class="cinfo">H · 文旅 · 集資約 <b>2.27 億</b> · 保薦人見披露易 · <a href="https://www1.hkexnews.hk/app/appindex.html?lang=zh" target="_blank">披露易</a></div></div><div class="other-vote" data-ov="shouxihu">
-        <div class="ov-btns">
-          <button type="button" class="ovbtn up" data-company="shouxihu" data-side="up">📈</button>
-          <button type="button" class="ovbtn down" data-company="shouxihu" data-side="down">📉</button>
-        </div>
-        <div class="ov-sum" data-ov-sum="shouxihu">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
-      </div></div>
-    <div class="other-item"><div class="num">8</div><div class="body"><div class="cname">常州微億智造</div><div class="cinfo">H · 智能製造 · 集資約 <b>8 億</b> · 保薦人見披露易 · <a href="https://www1.hkexnews.hk/app/appindex.html?lang=zh" target="_blank">披露易</a></div></div><div class="other-vote" data-ov="weiyi">
-        <div class="ov-btns">
-          <button type="button" class="ovbtn up" data-company="weiyi" data-side="up">📈</button>
-          <button type="button" class="ovbtn down" data-company="weiyi" data-side="down">📉</button>
-        </div>
-        <div class="ov-sum" data-ov-sum="weiyi">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
-      </div></div>
-    <div class="other-item"><div class="num">9</div><div class="body"><div class="cname">深圳創智芯聯</div><div class="cinfo">H · 半導體／PCB 鍍層 · 集資約 <b>15 億</b> · 保薦人見披露易 · <a href="https://www1.hkexnews.hk/app/sehk/2026/108473/documents/sehk26101900081_c.pdf" target="_blank">聆訊後資料集</a></div></div><div class="other-vote" data-ov="chuangzhi">
-        <div class="ov-btns">
-          <button type="button" class="ovbtn up" data-company="chuangzhi" data-side="up">📈</button>
-          <button type="button" class="ovbtn down" data-company="chuangzhi" data-side="down">📉</button>
-        </div>
-        <div class="ov-sum" data-ov-sum="chuangzhi">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
-      </div></div>
-    <div class="other-item"><div class="num">10</div><div class="body"><div class="cname">贛州和美藥業-B</div><div class="cinfo">H · 18A · 小分子創新藥 · 集資約 <b>9.7 億</b> · 保薦人見披露易 · <a href="https://www1.hkexnews.hk/app/sehk/2026/108622/documents/sehk26102001467_c.pdf" target="_blank">聆訊後資料集</a></div></div><div class="other-vote" data-ov="hemei">
-        <div class="ov-btns">
-          <button type="button" class="ovbtn up" data-company="hemei" data-side="up">📈</button>
-          <button type="button" class="ovbtn down" data-company="hemei" data-side="down">📉</button>
-        </div>
-        <div class="ov-sum" data-ov-sum="hemei">🐮 <b class="u">0</b> · 🐻 <b class="d">0</b></div>
-      </div></div>
-  </div>
-
-  <div class="section">
-    <h2>打新建議（精簡）</h2>
-    <ul class="clean">
-      <li><b>★★★★★</b> 天賜材料：全球電解液龍頭，2026H1 淨利大增，基本面最強。</li>
-      <li><b>★★★★★</b> 先通國際醫藥-B：18A 放射性核藥（診斷+治療），賽道長邏輯清晰；管線與虧損風險高，適高風險偏好。</li>
-      <li><b>★★★★☆</b> 濤濤車業：全球電動低速車收入第一（約10.9%），高毛利高海外佔比；需密切跟蹤美國關稅與貿易政策。</li>
-    </ul>
-    <p style="margin-top:12px;font-size:12.5px;color:var(--gray);text-align:left;">注：僅供參考，不構成投資建議。港股打新存在破發風險。</p>
-  </div>
+  <div id="connBar" class="conn-bar">正在載入…</div>
+  <div id="app" class="loading">載入公司資料中…</div>
   <div class="footer">
-    輝立証劵新股部 ｜ 數據來源：港交所聆訊後資料集 ｜ 2026年11月10日<br>
-    <a href="https://elizabeth20041021-droid.github.io/phillip-ipo/" style="color:#718096;">GitHub Pages 永久免費版</a>
+    輝立証劵新股部 ｜ 數據來源：港交所聆訊後資料集<br>
+    內容由後台維護 · 投票全組可見
   </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function () {
-  // ===== Supabase 設定 =====
-  // Project URL 必須是這種格式，不要加 /rest/v1/
   var SUPABASE_URL = "https://dqvqtmdnuzryowktbtgt.supabase.co";
-  // 請到 Supabase → Project Settings → API → 複製完整 anon public key 貼在下一行
   var SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxdnF0bWRudXpyeW93a3RidGd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI2NTEzOTgsImV4cCI6MjEwODIyNzM5OH0.PWvX7llsDDSOd5DdA7NtGwAW14jD34dj1aRpk7m-YPk";
-
-  var KEYS = ["tinci","sinotau","taotao","tanboer","glorysoft","yongkang","sifang","junxin","sinomags","shouxihu","weiyi","chuangzhi","hemei"];
-  var DB_ID = {
-    tinci: "tianci", sinotau: "sinotau", taotao: "taotao",
-    tanboer: "tanboer", glorysoft: "glorysoft", yongkang: "yongkang",
-    sifang: "sifang", junxin: "junxin", sinomags: "sinomags",
-    shouxihu: "shouxihu", weiyi: "weiyi", chuangzhi: "chuangzhi", hemei: "hemei"
-  };
-  var NAMES = {
-    tinci: "天賜材料", sinotau: "先通國際醫藥-B", taotao: "濤濤車業",
-    tanboer: "坦博爾", glorysoft: "哥瑞利軟件", yongkang: "永康控股",
-    sifang: "四方精創", junxin: "軍信環保", sinomags: "希磁科技",
-    shouxihu: "瘦西湖文旅", weiyi: "微億智造", chuangzhi: "創智芯聯", hemei: "和美藥業-B"
-  };
-  var MY_STORE = "ipo_my_vote_supabase_v1";
-
-  var bar = document.getElementById("connBar");
-  function setBar(msg, isErr) {
-    if (!bar) return;
-    bar.textContent = msg;
-    bar.classList.add("show");
-    if (isErr) bar.classList.add("err"); else bar.classList.remove("err");
-  }
-
-  if (!SUPABASE_KEY || SUPABASE_KEY.indexOf("PASTE_") === 0 || SUPABASE_KEY.length < 40) {
-    setBar("請先把完整 anon public key 貼進 index.html 的 SUPABASE_KEY", true);
-  }
+  var MY_STORE = "ipo_my_vote_cms_v1";
 
   var sb = null;
   try {
-    if (window.supabase && SUPABASE_KEY && SUPABASE_KEY.indexOf("PASTE_") !== 0) {
-      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    }
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   } catch (e) {
-    console.error(e);
-    setBar("Supabase 初始化失敗：" + (e && e.message ? e.message : e), true);
+    document.getElementById("app").textContent = "Supabase 初始化失敗";
+    return;
   }
 
+  var companies = [];
   var counts = {};
-  KEYS.forEach(function (k) { counts[k] = { up: 0, down: 0 }; });
   var busy = false;
+  var bar = document.getElementById("connBar");
+
+  function setBar(msg, isErr) {
+    if (!bar) return;
+    bar.textContent = msg || "";
+    if (!msg) { bar.classList.remove("show"); bar.classList.remove("err"); return; }
+    bar.classList.add("show");
+    if (isErr) bar.classList.add("err"); else bar.classList.remove("err");
+  }
 
   function loadMy() {
     try { return JSON.parse(localStorage.getItem(MY_STORE) || "{}"); } catch (e) { return {}; }
@@ -567,18 +252,153 @@
     setTimeout(function () { t.remove(); }, 1800);
   }
 
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
+  function bullets(arr, risk) {
+    if (!arr || !arr.length) return "";
+    return "<ul class=\"clean\">" + arr.map(function (t) {
+      return "<li" + (risk ? " class=\"risk\"" : "") + ">" + esc(t) + "</li>";
+    }).join("") + "</ul>";
+  }
+
+  function renderPeer(peer, blue) {
+    if (!peer || !peer.title) return "";
+    var h = "<div class=\"peer-box" + (blue ? " blue" : "") + "\"><h4>" + esc(peer.title) + "</h4>";
+    if (peer.note) h += "<p>" + esc(peer.note) + "</p>";
+    if (peer.headers && peer.rows) {
+      h += "<table class=\"peer-table\"><tr>";
+      peer.headers.forEach(function (x) { h += "<th>" + esc(x) + "</th>"; });
+      h += "</tr>";
+      peer.rows.forEach(function (row) {
+        h += "<tr>";
+        row.forEach(function (cell, i) {
+          var span = (row.length === 2 && i === 1 && peer.headers.length === 3) ? "" : "";
+          if (row.length === 1) h += "<td colspan=\"" + peer.headers.length + "\">" + esc(cell) + "</td>";
+          else h += "<td>" + esc(cell) + "</td>";
+        });
+        h += "</tr>";
+      });
+      h += "</table>";
+    }
+    h += "</div>";
+    return h;
+  }
+
+  function renderPage() {
+    var tops = companies.filter(function (c) { return c.tier === "top"; });
+    var others = companies.filter(function (c) { return c.tier === "other"; });
+    var today = new Date();
+    var ds = today.getFullYear() + "年" + (today.getMonth() + 1) + "月" + today.getDate() + "日";
+    document.getElementById("topMeta").textContent = "過聆訊後新股推薦 · " + ds;
+
+    var html = "";
+    html += "<div class=\"hero\" id=\"overview\">";
+    html += "<h1>過聆訊後新股推薦</h1>";
+    html += "<div class=\"sub\">精選三家 · 點擊卡片展開詳情 ｜ 數據來源：港交所聆訊後資料集</div>";
+    html += "<div class=\"hero-cards\">";
+    tops.forEach(function (c, i) {
+      html += "<button type=\"button\" class=\"hero-card\" data-open=\"" + esc(c.id) + "\" id=\"hero-" + esc(c.id) + "\">";
+      html += "<div class=\"stars\">" + esc(c.stars || "") + "</div>";
+      html += "<div class=\"name\">" + (i + 1) + " " + esc(c.name_zh) + "</div>";
+      html += "<div class=\"tag\">" + esc(c.tagline || "") + "</div>";
+      html += "<div class=\"fund\">預計集資 <b>" + esc(c.fund_text || "") + "</b></div>";
+      html += "<div class=\"vote-sum\" data-sum=\"" + esc(c.id) + "\"><span class=\"vote-pill up\">🐮 0</span><span class=\"vote-pill down\">🐻 0</span></div>";
+      html += "<div class=\"hint\">▼ 點擊展開全部詳情</div></button>";
+    });
+    html += "</div></div>";
+
+    html += "<div class=\"vote-how\"><b>投票互動：</b>前三詳情與下方簡表均可撳 <b>📈 升</b>／<b>📉 跌</b>；票數全組可見。再撳可取消。</div>";
+
+    tops.forEach(function (c, i) {
+      var badgeClass = (c.stars || "").indexOf("★★★★★") === 0 ? "green" : "blue";
+      html += "<div class=\"ipo-panel\" id=\"panel-" + esc(c.id) + "\">";
+      html += "<button type=\"button\" class=\"ipo-panel-head\" data-open=\"" + esc(c.id) + "\">";
+      html += "<div class=\"title-wrap\"><h2>" + (i + 1) + " " + esc(c.name_zh);
+      html += " <span class=\"badge " + badgeClass + "\">" + esc(c.stars || "") + "</span>";
+      if (c.badge_extra) html += " <span class=\"badge\">" + esc(c.badge_extra) + "</span>";
+      html += "</h2><p class=\"one-liner\">" + esc(c.one_liner || "") + "</p></div>";
+      html += "<span class=\"chev\">▼</span></button>";
+      html += "<div class=\"ipo-panel-body section-inner\">";
+      html += "<div class=\"vote-widget\" data-company=\"" + esc(c.id) + "\">";
+      html += "<div class=\"vote-actions\">";
+      html += "<button type=\"button\" class=\"vbtn up\" data-side=\"up\">📈 升</button>";
+      html += "<button type=\"button\" class=\"vbtn down\" data-side=\"down\">📉 跌</button>";
+      html += "<span class=\"vote-status\" data-status></span></div>";
+      html += "<div class=\"meter\"><div class=\"meter-labels\">";
+      html += "<span class=\"u\" data-lab-up>📈 升 0% (0)</span>";
+      html += "<span class=\"d\" data-lab-down>📉 跌 0% (0)</span></div>";
+      html += "<div class=\"meter-track\"><div class=\"meter-up\" data-meter style=\"width:50%\"></div></div></div></div>";
+
+      var kpis = c.kpis_json || [];
+      if (kpis.length) {
+        html += "<div class=\"kpi-row\">";
+        kpis.forEach(function (k) {
+          html += "<div class=\"kpi\"><div class=\"label\">" + esc(k.label) + "</div>";
+          html += "<div class=\"val" + (k.up ? " up" : "") + "\">" + esc(k.value) + "</div></div>";
+        });
+        html += "</div>";
+      }
+      if (c.position_json && c.position_json.length) {
+        html += "<h3>市場地位</h3>" + bullets(c.position_json);
+      }
+      if (c.pros_json && c.pros_json.length) {
+        html += "<h3>核心優勢</h3>" + bullets(c.pros_json);
+      }
+      if (c.risks_json && c.risks_json.length) {
+        html += "<h3>主要風險</h3>" + bullets(c.risks_json, true);
+      }
+      html += "<h3>保薦人 · 聆訊後資料集</h3>";
+      html += "<p class=\"meta-line\"><b>" + esc(c.sponsors || "見披露易") + "</b></p>";
+      if (c.phip_url) {
+        html += "<p class=\"link meta-line\" style=\"margin-top:4px;\"><a href=\"" + esc(c.phip_url) + "\" target=\"_blank\" rel=\"noopener\">聆訊後資料集 / 披露易</a></p>";
+      }
+      html += renderPeer(c.peer_json, i === 2);
+      html += "</div></div>";
+    });
+
+    html += "<div class=\"section\" id=\"others\"><h2>其他過聆訊公司（簡表）</h2>";
+    html += "<p style=\"font-size:12.5px;color:var(--gray);margin-bottom:10px;text-align:left;\">亦可撳 📈／📉 投票；票數全組可見。</p>";
+    others.forEach(function (c, i) {
+      html += "<div class=\"other-item\"><div class=\"num\">" + (i + 1) + "</div>";
+      html += "<div class=\"body\"><div class=\"cname\">" + esc(c.name_zh) + "</div>";
+      html += "<div class=\"cinfo\">" + esc(c.tagline || "");
+      if (c.fund_text) html += " · 集資 <b>" + esc(c.fund_text) + "</b>";
+      if (c.sponsors) html += " · " + esc(c.sponsors);
+      if (c.phip_url) html += " · <a href=\"" + esc(c.phip_url) + "\" target=\"_blank\" rel=\"noopener\">資料連結</a>";
+      html += "</div></div>";
+      html += "<div class=\"other-vote\" data-ov=\"" + esc(c.id) + "\">";
+      html += "<div class=\"ov-btns\">";
+      html += "<button type=\"button\" class=\"ovbtn up\" data-company=\"" + esc(c.id) + "\" data-side=\"up\">📈</button>";
+      html += "<button type=\"button\" class=\"ovbtn down\" data-company=\"" + esc(c.id) + "\" data-side=\"down\">📉</button>";
+      html += "</div><div class=\"ov-sum\" data-ov-sum=\"" + esc(c.id) + "\">🐮 <b class=\"u\">0</b> · 🐻 <b class=\"d\">0</b></div></div></div>";
+    });
+    html += "</div>";
+
+    html += "<div class=\"section\"><h2>打新建議（精簡）</h2><ul class=\"clean\">";
+    tops.forEach(function (c) {
+      html += "<li><b>" + esc(c.stars || "") + "</b> " + esc(c.name_zh) + "：" + esc(c.one_liner || c.tagline || "") + "</li>";
+    });
+    html += "</ul>";
+    html += "<p style=\"margin-top:12px;font-size:12.5px;color:var(--gray);text-align:left;\">注：僅供參考，不構成投資建議。港股打新存在破發風險。</p></div>";
+
+    document.getElementById("app").innerHTML = html;
+    bindUI();
+    paint();
+  }
+
   function paint() {
     var my = loadMy();
-    KEYS.forEach(function (k) {
-      var c = counts[k] || { up: 0, down: 0 };
-      var up = c.up || 0, down = c.down || 0, total = up + down;
+    companies.forEach(function (c) {
+      var k = c.id;
+      var ct = counts[k] || { up: 0, down: 0 };
+      var up = ct.up || 0, down = ct.down || 0, total = up + down;
       var upPct = total ? Math.round((up / total) * 100) : 0;
-      var downPct = total ? 100 - upPct : 0;
       var hero = document.querySelector('[data-sum="' + k + '"]');
       if (hero) {
-        hero.innerHTML =
-          '<span class="vote-pill up">🐮 ' + up + '</span>' +
-          '<span class="vote-pill down">🐻 ' + down + '</span>';
+        hero.innerHTML = '<span class="vote-pill up">🐮 ' + up + '</span><span class="vote-pill down">🐻 ' + down + '</span>';
       }
       var w = document.querySelector('.vote-widget[data-company="' + k + '"]');
       if (w) {
@@ -587,7 +407,7 @@
         var meter = w.querySelector("[data-meter]");
         var status = w.querySelector("[data-status]");
         if (labUp) labUp.textContent = "📈 升 " + upPct + "% (" + up + ")";
-        if (labDown) labDown.textContent = "📉 跌 " + downPct + "% (" + down + ")";
+        if (labDown) labDown.textContent = "📉 跌 " + (total ? 100 - upPct : 0) + "% (" + down + ")";
         if (meter) meter.style.width = (total ? upPct : 50) + "%";
         w.querySelectorAll(".vbtn").forEach(function (btn) {
           btn.classList.remove("on");
@@ -600,9 +420,7 @@
         }
       }
       var ovSum = document.querySelector('[data-ov-sum="' + k + '"]');
-      if (ovSum) {
-        ovSum.innerHTML = '🐮 <b class="u">' + up + '</b> · 🐻 <b class="d">' + down + '</b>';
-      }
+      if (ovSum) ovSum.innerHTML = '🐮 <b class="u">' + up + '</b> · 🐻 <b class="d">' + down + '</b>';
       document.querySelectorAll('.ovbtn[data-company="' + k + '"]').forEach(function (btn) {
         btn.classList.remove("on");
         if (my[k] && btn.getAttribute("data-side") === my[k]) btn.classList.add("on");
@@ -611,48 +429,32 @@
   }
 
   async function fetchVotes() {
-    if (!sb) return;
     try {
       var res = await sb.from("ipo_votes").select("id,up_votes,down_votes");
-      if (res.error) {
-        console.error(res.error);
-        setBar("讀取失敗：" + (res.error.message || JSON.stringify(res.error)), true);
-        return;
-      }
+      if (res.error) throw res.error;
       (res.data || []).forEach(function (row) {
-        KEYS.forEach(function (k) {
-          if (DB_ID[k] === row.id) {
-            counts[k] = { up: row.up_votes || 0, down: row.down_votes || 0 };
-          }
-        });
+        counts[row.id] = { up: row.up_votes || 0, down: row.down_votes || 0 };
       });
-      if (bar) { bar.classList.remove("show"); bar.classList.remove("err"); }
+      setBar("");
       paint();
     } catch (e) {
-      console.error(e);
-      setBar("網路錯誤：" + (e && e.message ? e.message : e), true);
+      setBar("投票讀取失敗：" + (e.message || e), true);
     }
   }
 
   async function cast(company, side) {
-    if (!sb) {
-      toast("請先設定完整 SUPABASE_KEY");
-      return;
-    }
     if (busy) return;
     busy = true;
     document.querySelectorAll(".vbtn, .ovbtn").forEach(function (b) { b.disabled = true; });
     var my = loadMy();
     var prev = my[company];
-    var dbId = DB_ID[company];
     try {
-      var cur = await sb.from("ipo_votes").select("up_votes,down_votes").eq("id", dbId).single();
+      var cur = await sb.from("ipo_votes").select("up_votes,down_votes").eq("id", company).maybeSingle();
       if (cur.error) throw cur.error;
       var up = (cur.data && cur.data.up_votes) || 0;
       var down = (cur.data && cur.data.down_votes) || 0;
       if (prev === side) {
-        if (side === "up") up = Math.max(0, up - 1);
-        else down = Math.max(0, down - 1);
+        if (side === "up") up = Math.max(0, up - 1); else down = Math.max(0, down - 1);
         delete my[company];
         toast("已取消");
       } else {
@@ -660,70 +462,86 @@
         if (prev === "down") down = Math.max(0, down - 1);
         if (side === "up") up += 1; else down += 1;
         my[company] = side;
-        toast((side === "up" ? "📈 升" : "📉 跌") + " · " + (NAMES[company] || ""));
+        var nm = (companies.find(function (x) { return x.id === company; }) || {}).name_zh || company;
+        toast((side === "up" ? "📈 升" : "📉 跌") + " · " + nm);
       }
-      var upd = await sb.from("ipo_votes").update({ up_votes: up, down_votes: down }).eq("id", dbId);
+      var upd = await sb.from("ipo_votes").upsert({ id: company, up_votes: up, down_votes: down });
       if (upd.error) throw upd.error;
       counts[company] = { up: up, down: down };
       saveMy(my);
       paint();
     } catch (e) {
-      console.error(e);
-      var msg = (e && e.message) ? e.message : String(e);
-      toast("同步失敗：" + msg);
-      setBar("寫入失敗：" + msg, true);
+      toast("同步失敗：" + (e.message || e));
+      setBar("寫入失敗：" + (e.message || e), true);
     }
     busy = false;
     document.querySelectorAll(".vbtn, .ovbtn").forEach(function (b) { b.disabled = false; });
   }
 
-  document.querySelectorAll(".vote-widget").forEach(function (w) {
-    w.querySelectorAll(".vbtn").forEach(function (btn) {
-      btn.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        cast(w.getAttribute("data-company"), btn.getAttribute("data-side"));
-      });
-    });
-  });
-  document.querySelectorAll(".ovbtn").forEach(function (btn) {
-    btn.addEventListener("click", function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      cast(btn.getAttribute("data-company"), btn.getAttribute("data-side"));
-    });
-  });
-
-  function openPanel(id, scroll) {
+  function openPanel(id) {
     var panel = document.getElementById("panel-" + id);
     if (!panel) return;
     var was = panel.classList.contains("open");
-    document.querySelectorAll(".ipo-panel.open").forEach(function (p) {
-      if (p !== panel) p.classList.remove("open");
-    });
-    document.querySelectorAll(".hero-card.active").forEach(function (c) {
-      c.classList.remove("active");
-    });
+    document.querySelectorAll(".ipo-panel.open").forEach(function (p) { p.classList.remove("open"); });
+    document.querySelectorAll(".hero-card.active").forEach(function (c) { c.classList.remove("active"); });
     if (!was) {
       panel.classList.add("open");
       var hero = document.getElementById("hero-" + id);
       if (hero) hero.classList.add("active");
-      if (scroll) setTimeout(function () {
-        panel.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 40);
-    } else {
-      panel.classList.remove("open");
+      setTimeout(function () { panel.scrollIntoView({ behavior: "smooth", block: "start" }); }, 40);
     }
   }
-  document.querySelectorAll("[data-open]").forEach(function (el) {
-    el.addEventListener("click", function () {
-      openPanel(el.getAttribute("data-open"), el.classList.contains("hero-card"));
-    });
-  });
 
-  paint();
-  fetchVotes();
-  setInterval(fetchVotes, 10000);
+  function bindUI() {
+    document.querySelectorAll("[data-open]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        openPanel(el.getAttribute("data-open"));
+      });
+    });
+    document.querySelectorAll(".vote-widget").forEach(function (w) {
+      w.querySelectorAll(".vbtn").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          e.preventDefault(); e.stopPropagation();
+          cast(w.getAttribute("data-company"), btn.getAttribute("data-side"));
+        });
+      });
+    });
+    document.querySelectorAll(".ovbtn").forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault(); e.stopPropagation();
+        cast(btn.getAttribute("data-company"), btn.getAttribute("data-side"));
+      });
+    });
+  }
+
+  async function init() {
+    setBar("正在載入公司資料…");
+    try {
+      var res = await sb.from("ipo_companies").select("*").eq("active", true).order("rank", { ascending: true });
+      if (res.error) throw res.error;
+      companies = res.data || [];
+      if (!companies.length) {
+        document.getElementById("app").innerHTML = "<p class=\"loading\">尚無公司資料。請先在 Supabase 執行 02_seed.sql，或用後台新增。</p>";
+        setBar("無資料", true);
+        return;
+      }
+      companies.forEach(function (c) {
+        if (typeof c.kpis_json === "string") try { c.kpis_json = JSON.parse(c.kpis_json); } catch (e) {}
+        if (typeof c.position_json === "string") try { c.position_json = JSON.parse(c.position_json); } catch (e) {}
+        if (typeof c.pros_json === "string") try { c.pros_json = JSON.parse(c.pros_json); } catch (e) {}
+        if (typeof c.risks_json === "string") try { c.risks_json = JSON.parse(c.risks_json); } catch (e) {}
+        if (typeof c.peer_json === "string") try { c.peer_json = JSON.parse(c.peer_json); } catch (e) {}
+      });
+      renderPage();
+      await fetchVotes();
+      setInterval(fetchVotes, 12000);
+    } catch (e) {
+      document.getElementById("app").innerHTML = "<p class=\"loading\">載入失敗：" + esc(e.message || e) + "<br>請確認已執行 01_schema.sql 與 02_seed.sql</p>";
+      setBar("載入失敗", true);
+    }
+  }
+
+  init();
 })();
 </script>
 </body>
